@@ -7,7 +7,6 @@ export default function SearchBar({ data }) {
     const [wasEmpty, setWasEmpty] = useState(true);
 
     const handleInputChange = async (e) => {
-
         const value = e.target.value;
         setInputText(value);
 
@@ -15,6 +14,7 @@ export default function SearchBar({ data }) {
         if (value === '' && !wasEmpty) {
             console.log('Input is empty now!');
             setWasEmpty(true); // Update the state to reflect that it's now empty
+            setResults([])
         } else if (value !== '' && wasEmpty) {
             setWasEmpty(false); // Update the state to reflect that it was non-empty
         }
@@ -43,7 +43,7 @@ export default function SearchBar({ data }) {
                     </svg>
                 </label>
             </div>
-            {!wasEmpty && 
+            {!wasEmpty && results &&
             <div className="flex justify-end w-full border-gray-400 border">
                 <div className="flex flex-col items-start gap-2 w-96 bg-black p-3 overflow-y-scroll max-h-[30rem]">
                     {results.map(r => 
