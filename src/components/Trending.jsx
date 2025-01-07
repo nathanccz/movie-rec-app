@@ -9,35 +9,35 @@ export default function Trending() {
     const [isActive, setIsActive] = useState(true)
     const [isLoading, setIsLoading] = useState(false)
 
-    useEffect(() => {
-        setIsLoading(true)
-        async function fetchTrendingMovies() {
-            try {
-                const data = await getTrendingMovies(streamingService)
-                console.log(data)
-                setMovies(data.shows);
-                setIsLoading(false)
-            } catch (error) {
-                console.log(error)
-            }
-        }
-        fetchTrendingMovies()
-    }, [streamingService])
+    // useEffect(() => {
+    //     setIsLoading(true)
+    //     async function fetchTrendingMovies() {
+    //         try {
+    //             const data = await getTrendingMovies(streamingService)
+    //             console.log(data)
+    //             setMovies(data.shows);
+    //             setIsLoading(false)
+    //         } catch (error) {
+    //             console.log(error)
+    //         }
+    //     }
+    //     fetchTrendingMovies()
+    // }, [streamingService])
 
-    useEffect(() => {
-        setIsLoading(true)
-        async function fetchTrendingShows() {
-            try {
-                const data = await getTrendingShows(streamingService)
-                console.log(data)
-                setTvShows(data);
-                setIsLoading(false)
-            } catch (error) {
-                console.log(error)
-            }
-        }
-        fetchTrendingShows()
-    }, [streamingService])
+    // useEffect(() => {
+    //     setIsLoading(true)
+    //     async function fetchTrendingShows() {
+    //         try {
+    //             const data = await getTrendingShows(streamingService)
+    //             console.log(data)
+    //             setTvShows(data);
+    //             setIsLoading(false)
+    //         } catch (error) {
+    //             console.log(error)
+    //         }
+    //     }
+    //     fetchTrendingShows()
+    // }, [streamingService])
 
     const handleServiceChange = (e) => {
         setStreamingService(e.target.value)

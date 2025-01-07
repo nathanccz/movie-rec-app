@@ -1,8 +1,9 @@
 export const getTitleDetails = async (id) => {
       try {
           const WATCHMODE_API_KEY = import.meta.env.VITE_WATCHMODE_KEY
-          const WATCHMODE_URL = `https://api.watchmode.com/v1/title/${id}/details/?apiKey=${WATCHMODE_API_KEY}`
-          const data = await fetch(WATCHMODE_URL)
+          const WATCHMODE_URL = `https://api.watchmode.com/v1/title/${id}/details/?apiKey=${WATCHMODE_API_KEY}&append_to_response=sources`
+          const response = await fetch(WATCHMODE_URL)
+          const data = await response.json()
           return data
       } catch (error) {
           console.log(error)

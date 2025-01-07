@@ -1,10 +1,12 @@
 import { useState } from "react"
-import { getAutocompleteDetails } from "../services/watchmode-api";
+import { getAutocompleteDetails, getTitleDetails } from "../services/watchmode-api";
+import Modal from "./Modal";
 
 export default function SearchBar({ data }) {
     const [results, setResults] = useState([])
     const [inputText, setInputText] = useState('')
-    const [wasEmpty, setWasEmpty] = useState(true);
+    const [wasEmpty, setWasEmpty] = useState(true)
+    const [modalContent, setModalContent] = useState({})
 
     const handleInputChange = async (e) => {
         const value = e.target.value;
@@ -26,7 +28,22 @@ export default function SearchBar({ data }) {
         }
     }
 
+    const handleModalOpen = async (searchResultObj) => {
+        const id = searchResultObj.id
+
+        try {
+            const data = await getTitleDetails(id)
+            console.log(data)
+            setModalContent(data)
+        } catch (error) {
+            console.log(error)
+        }
+
+        document.getElementById('my_modal_3').showModal()
+    }
+
     return (
+        <>
         <div className="absolute z-50 top-5 right-5">
             <div className="flex justify-end w-full mb-3">
                 <label className="input input-bordered flex items-center gap-2 w-96">
@@ -47,7 +64,7 @@ export default function SearchBar({ data }) {
             <div className="flex justify-end w-full border-gray-400 border">
                 <div className="flex flex-col items-start gap-2 w-96 bg-black p-3 overflow-y-scroll max-h-[30rem]">
                     {results.map(r => 
-                        <div className="card w-full card-side bg-base-100 shadow-xl px-4 cursor-pointer hover:bg-slate-600 ease-in-out duration-300" key={r.id}>
+                        <div className="card w-full card-side bg-base-100 shadow-xl px-4 cursor-pointer hover:bg-slate-600 ease-in-out duration-300" key={r.id} onClick={() => handleModalOpen(r)}>
                             <figure>
                             <img
                                 src={r.image_url}
@@ -55,14 +72,16 @@ export default function SearchBar({ data }) {
                                 className="w-[70px] h-[100-px]" />
                             </figure>
                             <div className="card-body">
-                            <h2 className="card-title">{r.name}</h2>
-                            <p>{r.year}</p>
+                                <h2 className="card-title">{r.name}</h2>
+                                <p>{r.year}</p>
                             </div>
-                      </div>
+                        </div>
                     )}
                 </div>
             </div>
             }
         </div>
+        <Modal data={modalContent} setModalContent={setModalContent}/>
+        </>
     )
 }
