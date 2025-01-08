@@ -12,25 +12,20 @@ export default function SearchBar({ data }) {
         const value = e.target.value;
         setInputText(value);
 
-        // If the input value is empty, check if it was previously non-empty
         if (value === '' && !wasEmpty) {
-            console.log('Input is empty now!');
-            setWasEmpty(true); // Update the state to reflect that it's now empty
+            setWasEmpty(true)
             setResults([])
         } else if (value !== '' && wasEmpty) {
-            setWasEmpty(false); // Update the state to reflect that it was non-empty
+            setWasEmpty(false)
         }
         
         if (inputText.length > 2) {
             const data = await getAutocompleteDetails(inputText)
-            console.log(data.results)
             setResults(data.results)
         }
     }
 
-    const handleModalOpen = async (searchResultObj) => {
-        const id = searchResultObj.id
-
+    const handleModalOpen = async (id) => {
         try {
             const data = await getTitleDetails(id)
             console.log(data)
@@ -64,7 +59,7 @@ export default function SearchBar({ data }) {
             <div className="flex justify-end w-full border-gray-400 border">
                 <div className="flex flex-col items-start gap-2 w-96 bg-black p-3 overflow-y-scroll max-h-[30rem]">
                     {results.map(r => 
-                        <div className="card w-full card-side bg-base-100 shadow-xl px-4 cursor-pointer hover:bg-slate-600 ease-in-out duration-300" key={r.id} onClick={() => handleModalOpen(r)}>
+                        <div className="card w-full card-side bg-base-100 shadow-xl px-4 cursor-pointer hover:bg-slate-600 ease-in-out duration-300" key={r.id} onClick={() => handleModalOpen(r.id)}>
                             <figure>
                             <img
                                 src={r.image_url}
