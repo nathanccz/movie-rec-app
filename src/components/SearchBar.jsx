@@ -9,8 +9,8 @@ export default function SearchBar({ data }) {
     const [modalContent, setModalContent] = useState({})
 
     const handleInputChange = async (e) => {
-        const value = e.target.value;
-        setInputText(value);
+        const value = e.target.value
+        setInputText(value)
 
         if (value === '' && !wasEmpty) {
             setWasEmpty(true)

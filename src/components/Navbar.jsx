@@ -2,7 +2,7 @@ export default function Navbar() {
     return (
         <div className="navbar opacity-90 bg-base-100 px-3 md:px-10 lg:px-36 sticky top-0 z-50">
             <div className="flex-1">
-                <a className="btn btn-ghost text-xl">MovieMate</a>
+                <a className="btn btn-ghost text-xl"><img src="/logo.svg" alt="" className="w-3/4 h-3/4"/></a>
             </div>
             <div className="flex-none">
                 <ul className="menu menu-horizontal px-1">
