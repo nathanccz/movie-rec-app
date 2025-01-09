@@ -14,12 +14,14 @@
     "aos": "^2.3.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-player": "^2.16.0",
     "react-router-dom": "^7.1.1",
     "streaming-availability": "^4.4.0",
     "swiper": "^11.2.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
+    "@tailwindcss/aspect-ratio": "^0.4.2",
     "@types/node": "^22.10.4",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",

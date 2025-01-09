@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { getAutocompleteDetails, getTitleDetails } from "../services/watchmode-api";
 import Modal from "./Modal";
+import { Icon } from "@iconify/react/dist/iconify.js"
 
 export default function SearchBar({ data }) {
     const [results, setResults] = useState([])
@@ -37,12 +38,19 @@ export default function SearchBar({ data }) {
         document.getElementById('my_modal_3').showModal()
     }
 
+    const handleClearInput = () => {
+        setInputText('')
+        setWasEmpty(true)
+        setResults([])
+    }
+
     return (
         <>
         <div className="absolute z-50 top-5 right-5">
             <div className="flex justify-end w-full mb-3">
                 <label className="input input-bordered flex items-center gap-2 w-96">
-                    <input type="text" className="grow" placeholder="Search title" onChange={handleInputChange}/>
+                   {!wasEmpty && <Icon icon="mdi:clear-circle" className='text-md cursor-pointer opacity-50 hover:opacity-100 ease-in-out duration-300' onClick={handleClearInput}/>}
+                    <input type="text" className="grow" placeholder="Search title" onChange={handleInputChange} value={inputText}/>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 16 16"

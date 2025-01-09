@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { getUserRegion } from "../services/ipify-api";
 import { getStreamSources } from "../services/watchmode-api";
+import Trailer from "./Trailer";
 
 export default function Modal({ data, setModalContent }) {
     const [streamSources, setStreamSources] = useState([])
@@ -68,10 +69,9 @@ export default function Modal({ data, setModalContent }) {
                 <form method="dialog">
                     <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={handleModalClose}>✕</button>
                 </form>
-                <h1 class="text-3xl font-bold mb-3 text-white">{data.title}</h1>
-                <div className="flex">
-                    <img src={data.poster} alt={`poster for ${data.title}`} />
-                    <video src="https://www.youtube.com/watch?v=XLA_uqAfbew"></video>
+                <h1 class="text-3xl font-bold mb-3 text-white">{data.title} {`(${data.year})`}</h1>
+                <div>
+                    <Trailer url={data.trailer} />
                 </div>
                 <p className="py-4">{data.plot_overview}</p>
                 <h3 class="text-2xl font-bold mb-5 text-white">Where To Watch</h3>
