@@ -2,8 +2,11 @@ import { useState, useEffect } from "react";
 import { getUserRegion } from "../services/ipify-api";
 import { getStreamSources } from "../services/watchmode-api";
 import Trailer from "./Trailer";
+import FaveButton from "./FaveButton";
+import WatchlistButton from "./WatchlistButton";
+import ReviewButton from "./ReviewButton";
 
-export default function Modal({ data, setModalContent }) {
+export default function Modal({ data, setModalContent, handleReviewModalOpen }) {
     const [streamSources, setStreamSources] = useState([])
     
     useEffect(() => {
@@ -69,7 +72,12 @@ export default function Modal({ data, setModalContent }) {
                 <form method="dialog">
                     <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={handleModalClose}>✕</button>
                 </form>
-                <h1 class="text-3xl font-bold mb-3 text-white">{data.title} {`(${data.year})`}</h1>
+                <h1 className="text-3xl font-bold mb-3 text-white">{data.title} {`(${data.year})`}</h1>
+                <div className="flex gap-3">
+                    <FaveButton data={data}/>
+                    <WatchlistButton data={data}/>
+                    <ReviewButton data={data} handleReviewModalOpen={handleReviewModalOpen}/>
+                </div>
                 <div>
                     <Trailer url={data.trailer} />
                 </div>

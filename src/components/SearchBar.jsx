@@ -2,6 +2,7 @@ import { useState } from "react"
 import { getAutocompleteDetails, getTitleDetails } from "../services/watchmode-api";
 import Modal from "./Modal";
 import { Icon } from "@iconify/react/dist/iconify.js"
+import ReviewModal from "./ReviewModal";
 
 export default function SearchBar({ data }) {
     const [results, setResults] = useState([])
@@ -44,6 +45,10 @@ export default function SearchBar({ data }) {
         setResults([])
     }
 
+    const handleReviewModalOpen = () => {
+        document.getElementById('my_modal_4').showModal()
+    }
+
     return (
         <>
         <div className="absolute z-50 top-5 right-5">
@@ -84,7 +89,8 @@ export default function SearchBar({ data }) {
             </div>
             }
         </div>
-        <Modal data={modalContent} setModalContent={setModalContent}/>
+        <Modal data={modalContent} setModalContent={setModalContent} handleReviewModalOpen={handleReviewModalOpen}/>
+        <ReviewModal data={modalContent} setModalContent={setModalContent}/>
         </>
     )
 }

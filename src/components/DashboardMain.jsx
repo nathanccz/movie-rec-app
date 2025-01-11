@@ -5,23 +5,23 @@ import SearchBar from "./SearchBar";
 
 
 export default function DashboardMain({ userData }) {
-     const [movies, setMovies] = useState([])
-     const [loading, setLoading] = useState(false)
+    const [movies, setMovies] = useState([])
+    const [loading, setLoading] = useState(false)
 
-    //   useEffect(() => {
-    //         setLoading(true)
-    //          async function fetchTrendingMovies() {
-    //              try {
-    //                  const data = await getTrendingMovies('netflix')
-    //                  console.log(data)
-    //                  setMovies(data.shows);
-    //                  setLoading(false)
-    //              } catch (error) {
-    //                  console.log(error)
-    //              }
-    //          }
-    //          fetchTrendingMovies()
-    //      }, [])
+    // useEffect(() => {
+    //       setLoading(true)
+    //        async function fetchTrendingMovies() {
+    //            try {
+    //                const data = await getTrendingMovies('netflix')
+    //                console.log(data)
+    //                setMovies(data.shows);
+    //                setLoading(false)
+    //            } catch (error) {
+    //                console.log(error)
+    //            }
+    //        }
+    //        fetchTrendingMovies()
+    //    }, [])
 
     return (
         <main class="p-10 bg-black w-full h-screen bg-main-background bg-cover rounded-tl-lg border-r-[1px] border-gray-400 overflow-y-scroll relative">
