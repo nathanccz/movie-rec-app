@@ -4,7 +4,7 @@ import MediaCard from "./MediaCard";
 import SearchBar from "./SearchBar";
 
 
-export default function DashboardMain() {
+export default function DashboardMain({ userData }) {
      const [movies, setMovies] = useState([])
      const [loading, setLoading] = useState(false)
 

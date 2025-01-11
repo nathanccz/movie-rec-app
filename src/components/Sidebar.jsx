@@ -1,4 +1,10 @@
-export default function Sidebar() {
+export default function Sidebar({ userData }) {
+
+    const handleLogOut = (e) => {
+        e.preventDefault()
+        window.location.href = 'http://localhost:3000/api/logout'; // Redirect to backend Google OAuth route
+      };
+
     return (
         <aside class="flex w-80 flex-col border-l-[1px] border-r-[1px] border-gray-400">
             <div class="flex mb-8 mt-4 mx-4">
@@ -8,7 +14,7 @@ export default function Sidebar() {
                     </div>
                 </div>
                 <div class="mt-2 ml-3">
-                    <h3 class="font-bold">Username</h3>
+                    <h3 class="font-bold">{userData.displayName}</h3>
                     <span>email@email.com</span>
                 </div>
             </div>
@@ -41,7 +47,7 @@ export default function Sidebar() {
                 </li>
             </ul>
             <a href="/logout"
-                ><button class="btn btn-outline mt-8 mx-7 w-4/5">
+                ><button class="btn btn-outline mt-8 mx-7 w-4/5" onClick={handleLogOut}>
                     <i class="fa-solid fa-right-from-bracket"></i>Log Out
                 </button>
             </a>

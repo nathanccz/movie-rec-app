@@ -1,6 +1,12 @@
 import { Icon } from "@iconify/react/dist/iconify.js"
 
 export default function LoginForm() {
+
+    const handleGoogleLogin = (e) => {
+        e.preventDefault()
+        window.location.href = 'http://localhost:3000/auth/google'; // Redirect to backend Google OAuth route
+      };
+
     return (
         <div className="p-16 bg-gray-900 opacity-90">
             <h1 className="mb-5 text-[2rem] font-bold text-left">Sign In</h1>
@@ -33,10 +39,12 @@ export default function LoginForm() {
                 </label>
                 <button className="btn btn-info">Sign in</button>
                 <p>OR</p>
-                <button className="btn btn-outline flex justify-start gap-5">
+                
+                <button className="btn btn-outline flex justify-start gap-5" onClick={handleGoogleLogin}>
                     <Icon icon="devicon:google" className='text-2xl'/>
                     Log in with Google
                 </button>
+               
             </form>
         </div>
     )
