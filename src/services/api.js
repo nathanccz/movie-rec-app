@@ -51,3 +51,21 @@ export const getMovie = async(movieId) => {
         console.error('Error getting movie:', error);
     }
 }
+
+export const getRecommendations = async (userID) => {
+    try {
+        const response = await fetch(`http://localhost:3000/api/movies/${userID}/recommendations`, {
+            credentials: 'include'
+        })
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch movie recommendations');
+        }
+
+        const data = await response.json()
+
+        return data
+    } catch (error) {
+        console.log('Error getting movie recommendations:', error)
+    }
+}

@@ -46,11 +46,10 @@ export default function Sidebar({ userData }) {
                     </ul>
                 </li>
             </ul>
-            <a href="/logout"
-                ><button class="btn btn-outline mt-8 mx-7 w-4/5" onClick={handleLogOut}>
+           <button class="btn btn-outline mt-8 mx-7 w-4/5" onClick={handleLogOut}>
                     <i class="fa-solid fa-right-from-bracket"></i>Log Out
-                </button>
-            </a>
+            </button>
+           
         </aside>
     )
 }

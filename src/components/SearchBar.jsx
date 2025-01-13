@@ -28,7 +28,7 @@ export default function SearchBar({ data }) {
         }
     }
 
-    const handleModalOpen = async (id) => {
+    const handleModalOpen = async (id) => { //NOTE: Add cache expiration to prevent stale data.
         let dataFromLS = localStorage.getItem(id),
             dataFromDB
 

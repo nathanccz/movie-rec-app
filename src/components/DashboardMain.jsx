@@ -9,6 +9,16 @@ export default function DashboardMain({ userData }) {
     const [loading, setLoading] = useState(false)
 
     // useEffect(() => {
+    //     async function fetchMovieRecommendations() {
+    //         try {
+    //             const response = await fetch()
+    //         } catch (error) {
+    //             console.log(error)
+    //         }
+    //     }
+    // })
+
+    // useEffect(() => {
     //       setLoading(true)
     //        async function fetchTrendingMovies() {
     //            try {
