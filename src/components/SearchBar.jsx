@@ -3,6 +3,7 @@ import { getAutocompleteDetails, getTitleDetails } from "../services/watchmode-a
 import Modal from "./Modal";
 import { Icon } from "@iconify/react/dist/iconify.js"
 import ReviewModal from "./ReviewModal";
+import { addMovie, getMovie } from "../services/api";
 
 export default function SearchBar({ data }) {
     const [results, setResults] = useState([])
@@ -28,14 +29,36 @@ export default function SearchBar({ data }) {
     }
 
     const handleModalOpen = async (id) => {
-        try {
-            const data = await getTitleDetails(id)
-            console.log(data)
-            setModalContent(data)
-        } catch (error) {
-            console.log(error)
-        }
+        let dataFromLS = localStorage.getItem(id),
+            dataFromDB
 
+        if (dataFromLS !== null) {
+            setModalContent(JSON.parse(dataFromLS))
+        } else {
+            try {
+                const data = await getMovie(id)
+                dataFromDB = data[0]
+                if (Object.keys(dataFromDB).length > 0) {
+                    setModalContent(dataFromDB)
+                } else {
+                    dataFromDB = null
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        } 
+        
+        if (!dataFromLS && !dataFromDB) {
+            try {
+                const data = await getTitleDetails(id)
+
+                setModalContent(data)
+                handleAddMovie(data)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+ 
         document.getElementById('my_modal_3').showModal()
     }
 
@@ -47,6 +70,32 @@ export default function SearchBar({ data }) {
 
     const handleReviewModalOpen = () => {
         document.getElementById('my_modal_4').showModal()
+    }
+
+    const handleAddMovie = async (data) => {
+        try {
+            const body = {
+                movieId: data.id,
+                title: data.title,
+                year: data.year,
+                plot_overview: data.plot_overview,
+                poster: data.poster,
+                type: data.type,
+                trailer: data.trailer,
+                sources: data.sources,
+                genres: data.genres,
+                critic_score: data.critic_score,
+                user_rating: data.user_rating
+            }
+            localStorage.setItem(data.id, JSON.stringify(body))
+            const response = await addMovie(body)
+
+            if (response.ok) {
+                console.log('movie added!')
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return (

@@ -4,7 +4,7 @@ export default function FAQs() {
                 data-aos="fade-up"
                 data-aos-duration="800"
                 data-aos-delay="500">
-            <h2 className="my-5 text-2xl font-bold px-3">Frequently Asked Question</h2>
+            <h2 className="my-5 text-2xl font-bold px-3">Frequently Asked Questions</h2>
             <div className="collapse collapse-plus bg-base-200">
             <input type="radio" name="my-accordion-3" defaultChecked />
             <div className="collapse-title text-xl font-medium">What does this app do?</div>
@@ -12,7 +12,7 @@ export default function FAQs() {
             <p>Good question! This is not your typical movie tracker. This app is like having a personalized movie recommender. It quietly learns about your tastes and offers recommendations that go beyond simple "like/dislike" algorithms. You'll get smart recommendations, plus titles that may surprise you.</p>
             </div>
             </div>
-            <div className="collapse collapse-plus bg-base-200 hover:bg-slate-800 ease-in-out duration-500">
+            <div className="collapse collapse-plus bg-base-200">
                 <input type="radio" name="my-accordion-3" />
                 <div className="collapse-title text-xl font-medium">How does this app learn about my watch habits? </div>
                 <div className="collapse-content">
