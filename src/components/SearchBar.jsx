@@ -1,12 +1,13 @@
 import { useState } from "react"
-import { getAutocompleteDetails, getTitleDetails } from "../services/watchmode-api";
+import { fetchMovieAutocomplete, fetchTvAutocomplete, getFullMediaDetails } from "../services/tmdb-api";
 import Modal from "./Modal";
 import { Icon } from "@iconify/react/dist/iconify.js"
 import ReviewModal from "./ReviewModal";
 import { addMovie, getMovie } from "../services/api";
 
 export default function SearchBar({ data }) {
-    const [results, setResults] = useState([])
+    const [movieResults, setMovieResults] = useState([])
+    const [tvResults, setTvResults] = useState([])
     const [inputText, setInputText] = useState('')
     const [wasEmpty, setWasEmpty] = useState(true)
     const [modalContent, setModalContent] = useState({})
@@ -17,28 +18,30 @@ export default function SearchBar({ data }) {
 
         if (value === '' && !wasEmpty) {
             setWasEmpty(true)
-            setResults([])
+            setMovieResults([])
         } else if (value !== '' && wasEmpty) {
             setWasEmpty(false)
         }
         
         if (inputText.length > 2) {
-            const data = await getAutocompleteDetails(inputText)
-            setResults(data.results)
+            const movieData = await fetchMovieAutocomplete(inputText)
+            console.log(movieData)
+            setMovieResults(movieData)
         }
     }
 
-    const handleModalOpen = async (id) => { //NOTE: Add cache expiration to prevent stale data.
-        let dataFromLS = localStorage.getItem(id),
+    const handleModalOpen = async (mediaId, mediaType) => { //NOTE: Add cache expiration to prevent stale data.
+        let dataFromLS = localStorage.getItem(mediaId),
             dataFromDB
 
         if (dataFromLS !== null) {
             setModalContent(JSON.parse(dataFromLS))
         } else {
             try {
-                const data = await getMovie(id)
-                dataFromDB = data[0]
-                if (Object.keys(dataFromDB).length > 0) {
+                const data = await getMovie(mediaId)
+                console.log(data)
+                dataFromDB = data[0] || null
+                if (dataFromDB) {
                     setModalContent(dataFromDB)
                 } else {
                     dataFromDB = null
@@ -50,7 +53,7 @@ export default function SearchBar({ data }) {
         
         if (!dataFromLS && !dataFromDB) {
             try {
-                const data = await getTitleDetails(id)
+                const data = await getFullMediaDetails(mediaId, mediaType)
 
                 setModalContent(data)
                 handleAddMovie(data)
@@ -65,7 +68,7 @@ export default function SearchBar({ data }) {
     const handleClearInput = () => {
         setInputText('')
         setWasEmpty(true)
-        setResults([])
+        setMovieResults([])
     }
 
     const handleReviewModalOpen = () => {
@@ -78,13 +81,13 @@ export default function SearchBar({ data }) {
                 movieId: data.id,
                 title: data.title,
                 year: data.year,
-                plot_overview: data.plot_overview,
+                overview: data.overview,
+          
                 poster: data.poster,
                 type: data.type,
                 trailer: data.trailer,
                 sources: data.sources,
                 genres: data.genres,
-                critic_score: data.critic_score,
                 user_rating: data.user_rating
             }
             localStorage.setItem(data.id, JSON.stringify(body))
@@ -117,20 +120,24 @@ export default function SearchBar({ data }) {
                     </svg>
                 </label>
             </div>
-            {!wasEmpty && results &&
+            {!wasEmpty && movieResults &&
             <div className="flex justify-end w-full border-gray-400 border">
-                <div className="flex flex-col items-start gap-2 w-96 bg-black p-3 overflow-y-scroll max-h-[30rem]">
-                    {results.map(r => 
-                        <div className="card w-full card-side bg-base-100 shadow-xl px-4 cursor-pointer hover:bg-slate-600 ease-in-out duration-300" key={r.id} onClick={() => handleModalOpen(r.id)}>
+                <div className="flex flex-col items-start gap-2 w-96 bg-black px-3 overflow-y-scroll max-h-[30rem] relative">
+                    <div role="tablist" className="tabs tabs-bordered top-0 z-50 sticky bg-black w-full py-3">
+                        <a role="tab" className="tab tab-active">Movies</a>
+                        <a role="tab" className="tab">TV Shows</a>
+                    </div>
+                    {movieResults.map(r => 
+                        <div className="card w-full card-side bg-base-100 shadow-xl px-4 cursor-pointer hover:bg-slate-600 ease-in-out duration-300" key={r.id} onClick={() => handleModalOpen(r.id, 'movie')}>
                             <figure>
                             <img
-                                src={r.image_url}
+                                src={r.poster}
                                 alt="Movie"
                                 className="w-[70px] h-[100-px]" />
                             </figure>
                             <div className="card-body">
-                                <h2 className="card-title">{r.name}</h2>
-                                <p>{r.year}</p>
+                                <h2 className="card-title">{r.title}</h2>
+                                <p>{r.release_date.split('-')[0]}</p>
                             </div>
                         </div>
                     )}

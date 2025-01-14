@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { getUserRegion } from "../services/ipify-api";
 import { getStreamSources } from "../services/watchmode-api";
 import Trailer from "./Trailer";
 import FaveButton from "./FaveButton";
@@ -7,57 +6,29 @@ import WatchlistButton from "./WatchlistButton";
 import ReviewButton from "./ReviewButton";
 
 export default function Modal({ data, setModalContent, handleReviewModalOpen }) {
-    const [streamSources, setStreamSources] = useState([])
     
-    useEffect(() => {
-        let streamingSourceInfo,
-            availableStreamingSources,
-            sourcesWithLogos,
-            userRegion
-
-        async function gatherStreamSourceInfo() {
-            try {
-                userRegion = await getUserRegion()
-                streamingSourceInfo = await getStreamSources()
-                availableStreamingSources = data.sources.filter(source => source.region === userRegion && (source.type === 'sub' || source.type === 'free') )
-                sourcesWithLogos = availableStreamingSources.map(s => {
-                    s.logo = streamingSourceInfo.find(e => e.id === s.source_id).logo_100px
-                    return s
-            })
-            } catch (error) {
-                console.log(error)
-            }
-            
-            setStreamSources(sourcesWithLogos)
-            console.log(streamSources)
-        }
-
-        if (Object.keys(data).length > 0) {
-            gatherStreamSourceInfo()
-        } 
-    }, [data])
-
+    console.log(data)
     const handleModalClose = () => {
         setModalContent({})
-        setStreamSources([])
     }
 
+    const streamSources = data.sources || null
     let streamSourcesList
 
-    if (streamSources.length === 0) {
+    if (!streamSources) {
         streamSourcesList = <p className="italic">This title is not available for free or by subscription</p>
     } else {
         streamSourcesList = streamSources.map(s => 
         
             <ul className="flex w-full justify-between items-center" key={s.id}>
                 <li className="basis-[15%] text-center"> 
-                    <img src={s.logo} alt={`${s.name} logo`} className="w-[50px] h-[50px]" />
+                    <img src={s.logo} alt={`${s.name || s.title} logo`} className="w-[50px] h-[50px]" />
                 </li>
                 <li className="basis-[60%] text-center">
-                    <b>{s.name}</b> {`(${s.type === 'sub' ? 'subscription' : 'free'})`}
+                    <b>{s.provider_name}</b> {`(${s.type ? 'subscription' : 'free'})`}
                 </li>
                 <li className="basis-[15%] text-center flex justify-end">
-                    <a href={s.web_url} target="_blank">
+                    <a href={s.trailer} target="_blank">
                         <img src="https://img.icons8.com/color/48/next.png" alt="play button"/>
                     </a>
                 </li>
@@ -72,7 +43,7 @@ export default function Modal({ data, setModalContent, handleReviewModalOpen }) 
                 <form method="dialog">
                     <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={handleModalClose}>✕</button>
                 </form>
-                <h1 className="text-3xl font-bold mb-3 text-white">{data.title} {`(${data.year})`}</h1>
+                <h1 className="text-3xl font-bold mb-3 text-white">{data.title} {`(${data.release_date})`}</h1>
                 <div className="flex gap-3">
                     <FaveButton data={data}/>
                     <WatchlistButton data={data}/>
@@ -81,7 +52,7 @@ export default function Modal({ data, setModalContent, handleReviewModalOpen }) 
                 <div>
                     <Trailer url={data.trailer} />
                 </div>
-                <p className="py-4">{data.plot_overview}</p>
+                <p className="py-4">{data.overview}</p>
                 <h3 class="text-2xl font-bold mb-5 text-white">Where To Watch</h3>
                 <div className="flex flex-col w-full gap-4" id="serviceListContainer">
                     {streamSourcesList}
