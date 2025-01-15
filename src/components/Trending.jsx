@@ -1,55 +1,40 @@
 import { useState, useEffect } from "react"
 import TrendingList from "./TrendingList";
-import { getTrendingMovies, getTrendingShows } from "../services/rapidapi";
+import { getTrendingNow } from "../services/tmdb-api";
 
 export default function Trending() {
-    const [movies, setMovies] = useState([])
-    const [tvShows, setTvShows] = useState([])
-    const [streamingService, setStreamingService] = useState('netflix')
+    const [titles, setTitles] = useState([])
+    const [mediaType, setMediaType] = useState('movie')
+    const [streamingService, setStreamingService] = useState('Netflix')
     const [isActive, setIsActive] = useState(true)
     const [isLoading, setIsLoading] = useState(false)
 
-    // useEffect(() => {
-    //     setIsLoading(true)
-    //     async function fetchTrendingMovies() {
-    //         try {
-    //             const data = await getTrendingMovies(streamingService)
-    //             console.log(data)
-    //             setMovies(data.shows);
-    //             setIsLoading(false)
-    //         } catch (error) {
-    //             console.log(error)
-    //         }
-    //     }
-    //     fetchTrendingMovies()
-    // }, [streamingService])
-
-    // useEffect(() => {
-    //     setIsLoading(true)
-    //     async function fetchTrendingShows() {
-    //         try {
-    //             const data = await getTrendingShows(streamingService)
-    //             console.log(data)
-    //             setTvShows(data);
-    //             setIsLoading(false)
-    //         } catch (error) {
-    //             console.log(error)
-    //         }
-    //     }
-    //     fetchTrendingShows()
-    // }, [streamingService])
+    useEffect(() => {
+        setIsLoading(true)
+        async function fetchTrendingShows() {
+            try {
+                const data = await getTrendingNow(streamingService, mediaType)
+                console.log(data)
+                setTitles(data);
+                setIsLoading(false)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        fetchTrendingShows()
+    }, [streamingService, mediaType])
 
     const handleServiceChange = (e) => {
         setStreamingService(e.target.value)
     }
 
     const handleMediaChange = (e) => {
-        if (e.target.value === 'movies' && !isActive) {
-            console.log('active')
+        if (e.target.value === 'movie' && !isActive) {
             setIsActive(true)
+            setMediaType('movie')
         } else if (e.target.value === 'tv' && isActive) {
-            console.log('not')
             setIsActive(false)
+            setMediaType('tv')
         } else {
             return
         }
@@ -65,27 +50,27 @@ export default function Trending() {
                 <div className="mb-10 flex flex-col gap-4 justify-center items-center w-full px-6 lg:flex-row lg:justify-start">
                     <select className="select select-bordered w-full lg:w-[10rem]" onChange={handleServiceChange}>
                         <option 
-                            disabled={streamingService === 'netflix'} 
-                            selected={streamingService === 'netflix'}
-                            value={'netflix'}>
+                            disabled={streamingService === 'Netflix'} 
+                            selected={streamingService === 'Netflix'}
+                            value={'Netflix'}>
                             Netflix
                         </option>
                         <option 
-                            disabled={streamingService === 'hbo'} 
-                            selected={streamingService === 'hbo'}
-                            value={'hbo'}>
-                            HBO Max
+                            disabled={streamingService === 'Max'} 
+                            selected={streamingService === 'Max'}
+                            value={'Max'}>
+                            Max
                         </option>
                         <option 
-                            disabled={streamingService === 'disney'} 
-                            selected={streamingService === 'disney'}
-                            value={'disney'}>
-                            Disney+
+                            disabled={streamingService === 'Amazon Prime'} 
+                            selected={streamingService === 'Amazon Prime'}
+                            value={'Amazon Prime'}>
+                            Amazon Prime
                         </option>
                         <option 
-                            disabled={streamingService === 'apple'} 
-                            selected={streamingService === 'apple'}
-                            value={'apple'}>
+                            disabled={streamingService === 'Apple TV'} 
+                            selected={streamingService === 'Apple TV'}
+                            value={'Apple TV'}>
                             Apple TV
                         </option>
                     </select>
@@ -93,7 +78,7 @@ export default function Trending() {
                         <option 
                             disabled={isActive} 
                             selected={isActive}
-                            value={'movies'}>
+                            value={'movie'}>
                             Movies
                         </option>
                         <option 
@@ -104,9 +89,7 @@ export default function Trending() {
                         </option>
                     </select>
                 </div>
-                {isActive ? 
-                <TrendingList data={movies} isLoading={isLoading} /> :
-                <TrendingList data={tvShows} isLoading={isLoading}/>}
+                <TrendingList data={titles} isLoading={isLoading} /> 
             </div>
         </>   
     )

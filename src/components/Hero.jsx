@@ -11,9 +11,9 @@ export default function Hero() {
             <div className="hero-overlay bg-opacity-50"></div>
             <div className="hero-content text-center text-white">
                 <div className="max-w-lg">
-                <h1 className="mb-5 text-[2.5rem] font-bold">Your ultimate movie finder, powered by Claude AI</h1>
+                <h1 className="mb-5 text-[2.5rem] font-bold">Your ultimate movie finder, powered by TMDb and DeepSeek AI</h1>
                 <p className="mb-5">
-                    Go beyond the standard algorithm. Let Claude AI give you personalized recommendations based on your mood and preferences — or find a hidden gem you've never heard of.
+                    Go beyond the standard algorithm. Let DeepSeek AI give you personalized recommendations based on your mood and preferences — or find a hidden gem you've never heard of.
                 </p>
                 <label className="input input-bordered flex items-center gap-2 mb-3">
                     <svg

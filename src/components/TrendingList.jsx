@@ -56,16 +56,16 @@ export default function TrendingList({ data, isLoading }) {
                       {isLoading ? <div className="skeleton h-48 w-48"></div>:
                       <div key={data.id} className='overflow-hidden'>
                           <img
-                            src={data.imageSet.verticalPoster.w240}
+                            src={data.poster}
                             alt={data.title}
                             className='cursor-pointer hover:scale-110 ease-in-out duration-500'
                             onClick={() => {
                               document.querySelector('.modal-box img').src = ''
                               document.querySelector('.modal-box h3').textContent = data.title
-                              document.querySelector('.modal-box img').src = data.imageSet.horizontalBackdrop.w720
+                              document.querySelector('.modal-box img').src = data.poster
                               document.querySelector('.modal-box p').textContent = data.overview
-                              document.querySelector('.modal-box .year').textContent = data.releaseYear || data.firstReleaseYear
-                              document.querySelector('.modal-box .rating').textContent = data.rating   
+                              document.querySelector('.modal-box .year').textContent = data.release_date
+                              // document.querySelector('.modal-box .rating').textContent = data.rating   
                               document.getElementById('my_modal_3').showModal()
                               }
                             } 

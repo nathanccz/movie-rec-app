@@ -1,17 +1,19 @@
 import { getUserRegion } from "./ipify-api"
 
+const GET_OPTIONS = {
+    method: 'GET',
+    headers: {
+        'Authorization': `Bearer ${import.meta.env.VITE_TMDB_TOKEN}`,
+        'Content-Type': 'application/json'
+    }
+}
+
 export const getFullMediaDetails = async (mediaId, mediaType) => {
     try {
         const URL = `https://api.themoviedb.org/3/${mediaType}/${mediaId}?append_to_response=videos,watch/providers,credits`
-        const response = await fetch(URL, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${import.meta.env.VITE_TMDB_TOKEN}`,
-                'Content-Type': 'application/json'
-            }
-        })
+        const response = await fetch(URL, GET_OPTIONS)
         const data = await response.json()
-        console.log(data)
+
         const baseMediaDetails = extractMediaDetails(data, mediaType)
         const providers = await extractProviders(data['watch/providers'])
         const castAndCrew = extractCastAndCrew(data.credits)
@@ -110,13 +112,7 @@ export const fetchMovieAutocomplete = async (userInput) => {
     if (userInput === '') return
     try {
         const URL = `https://api.themoviedb.org/3/search/movie?query=${userInput}`
-        const response = await fetch(URL, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${import.meta.env.VITE_TMDB_TOKEN}`,
-                'Content-Type': 'application/json'
-            }
-        })
+        const response = await fetch(URL, GET_OPTIONS)
         const data = await response.json()
         const resultsWithPoster = data.results.map(r => {
             r.poster = `https://image.tmdb.org/t/p/w300${r.poster_path}`
@@ -133,17 +129,40 @@ export const fetchTvAutocomplete = async (userInput) => {
     if (userInput === '') return
     try {
         const URL = `https://api.themoviedb.org/3/search/tv?query=${userInput}`
-        const response = await fetch(URL, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${import.meta.env.VITE_TMDB_TOKEN}`,
-                'Content-Type': 'application/json'
-            }
-        })
+        const response = await fetch(URL, GET_OPTIONS)
         const data = await response.json()
 
         return data
     } catch (error) {
         console.log(error)
+    }
+}
+
+export const getTrendingNow = async (provider, mediaType) => {
+    const providerIds = {
+        "Netflix": 8,
+        "Amazon Prime": 9,
+        "Max": 1899,
+        "Apple TV": 2
+    }
+
+    const providerId = providerIds[provider]
+
+    try {
+        const userRegion = await getUserRegion()
+        console.log(userRegion)
+        const URL = `https://api.themoviedb.org/3/discover/${mediaType}?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&watch_region=${userRegion}&with_watch_providers=${providerId}`
+     
+        const response = await fetch(URL, GET_OPTIONS)
+        const data = await response.json()
+        console.log(data)
+        const titlesWithPosters = data.results.map(t => ({
+            ...t,
+            poster: `https://image.tmdb.org/t/p/w200${t.poster_path}`
+        }))
+        
+        return titlesWithPosters
+    } catch (error) {
+        console.log('Error fetching trending titles:', error)
     }
 }
