@@ -1,25 +1,25 @@
 export default function MediaCard({ data, loading }) {
     return (
         <>
-            {!loading ? data.map(m =>
-            <div className="card bg-base-100 w-96 shadow-xl lg:min-w-[250px]" key={m.id}>
+            {!loading && data ? data.map(m =>
+            <div className="card bg-base-100 w-96 shadow-xl lg:min-w-[200px]" key={m.tmdbId}>
                 <figure>
                     <img
-                    src={m.imageSet.verticalPoster.w360}
-                    alt={m.title} 
-                    className="cursor-pointer hover:scale-110 ease-in-out duration-500"/>
+                    src={m.poster}
+                    alt={m.title || m.name} 
+                    className="cursor-pointer hover:scale-110 ease-in-out duration-500 w-full h-full"/>
                 </figure>
-                <div className="card-body">
+                <div className="card-body px-0 py-5">
                     <a href="">
                         <h2 className="card-title hover:text-gray-500 ease-in-out duration-300 text-md">
-                            {m.title}
+                            {m.title || m.name}
                         </h2>
                     </a>
-                    <div className="badge badge-secondary">{m.releaseYear}</div>
-                    <p className="text-sm">Dir. {m.directors.join(', ')}</p>
-                    <div className="card-actions justify-end">
+                    <div className="badge badge-secondary">{m.release_date?.split('-')[0] || m.first_air_date?.split('-')[0]}</div>
+                    {/* <p className="text-sm">Dir. {m.director.name}</p> */}
+                    <div className="card-actions justify-end mt-5">
                     {m.genres.map(g =>
-                        <div className="badge badge-outline" key={g.id}>{g.name}</div>
+                        <div className="badge badge-outline" key={g.id}>{g}</div>
                     )}
                     </div>
                 </div>

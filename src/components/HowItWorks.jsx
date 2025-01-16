@@ -11,7 +11,7 @@ export default function HowItWorks() {
                 <div className="card shadow-xl bg-primary hover:bg-gray-600 ease-in-out duration-300">
                     <div className="card-body w-full">
                         <h2 className="card-title">Search Movies and TV</h2>
-                        <p>Have a title in mind? Search hundreds of streaming services to see if it's available by subscription or free.</p>
+                        <p>Have a title in mind? Search hundreds of streaming services to see where it's available by subscription or for free.</p>
                         <div className="card-actions justify-end">
                         <Icon icon="tabler:world-search" className='text-5xl'/>
                         </div>
@@ -20,7 +20,7 @@ export default function HowItWorks() {
                 <div className="card shadow-xl bg-primary hover:bg-gray-600 ease-in-out duration-300">
                     <div className="card-body">
                         <h2 className="card-title">Rate What You've Seen</h2>
-                        <p>Give it a star rating and be sure to add a short review. This will help the app understand your tastes!</p>
+                        <p>Give it a star rating and be sure to add a review. This will help the app understand your tastes!</p>
                         <div className="card-actions justify-end">
                         <Icon icon="material-symbols:star-rate-outline" className='text-5xl'/>
                         </div>
@@ -38,7 +38,7 @@ export default function HowItWorks() {
                 <div className="card shadow-xl bg-primary hover:bg-gray-600 ease-in-out duration-300">
                     <div className="card-body">
                         <h2 className="card-title">Get Recommended Titles</h2>
-                        <p>As the app learns more about your ratings and watch habits, you'll see more movies tailored to you, powered by ClaudeAI.</p>
+                        <p>As the app learns more about your ratings and tastes, you'll see more movies tailored to you, powered by DeepSeek AI.</p>
                         <div className="card-actions justify-end">
                         <Icon icon="hugeicons:ai-idea" className='text-5xl'/>
                         </div>

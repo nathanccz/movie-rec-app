@@ -6,20 +6,18 @@ import WatchlistButton from "./WatchlistButton";
 import ReviewButton from "./ReviewButton";
 
 export default function Modal({ data, setModalContent, handleReviewModalOpen }) {
-    
-    console.log(data)
+
     const handleModalClose = () => {
         setModalContent({})
     }
-
-    const streamSources = data.sources || null
+    
+    const streamSources = data.sources
     let streamSourcesList
 
-    if (!streamSources) {
-        streamSourcesList = <p className="italic">This title is not available for free or by subscription</p>
+    if (!streamSources || streamSources.length === 0) {
+        streamSourcesList = <p className="italic">This title is not available for free or by subscription.</p>
     } else {
         streamSourcesList = streamSources.map(s => 
-        
             <ul className="flex w-full justify-between items-center" key={s.id}>
                 <li className="basis-[15%] text-center"> 
                     <img src={s.logo} alt={`${s.name || s.title} logo`} className="w-[50px] h-[50px]" />
@@ -33,7 +31,6 @@ export default function Modal({ data, setModalContent, handleReviewModalOpen }) 
                     </a>
                 </li>
             </ul>
-            
         )
     }
 
@@ -43,14 +40,14 @@ export default function Modal({ data, setModalContent, handleReviewModalOpen }) 
                 <form method="dialog">
                     <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={handleModalClose}>✕</button>
                 </form>
-                <h1 className="text-3xl font-bold mb-3 text-white">{data.title} {`(${data.release_date})`}</h1>
+                <h1 className="text-3xl font-bold mb-3 text-white">{data.title} {`(${data.release_date?.split('-')[0]})`}</h1>
                 <div className="flex gap-3">
                     <FaveButton data={data}/>
                     <WatchlistButton data={data}/>
                     <ReviewButton data={data} handleReviewModalOpen={handleReviewModalOpen}/>
                 </div>
                 <div>
-                    <Trailer url={data.trailer} />
+                    {data.trailer ? <Trailer url={data.trailer} /> : <p className="py-[10rem] italic">No trailer available for this title.</p>}
                 </div>
                 <p className="py-4">{data.overview}</p>
                 <h3 class="text-2xl font-bold mb-5 text-white">Where To Watch</h3>

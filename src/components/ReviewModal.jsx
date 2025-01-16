@@ -16,7 +16,7 @@ export default function ReviewModal({ data }) {
                         <img src={data.poster} alt={`poster for ${data.title}`} />
                     </div>
                     <div className="w-full">
-                        <h2 className="font-bold text-2xl mb-5">{data.title} {`(${data.year})`}</h2>
+                        <h2 className="font-bold text-2xl mb-5">{data.title} {`(${data.release_date?.split('-')[0]})`}</h2>
                         <textarea className="textarea textarea-bordered w-full mb-5 h-[20rem]" placeholder="Add review..."></textarea>
                     </div>
                 </div>

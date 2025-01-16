@@ -1,4 +1,5 @@
-import { getUserRegion } from "./ipify-api"
+
+import { getGenreNames } from "../../utils/helpers"
 
 const GET_OPTIONS = {
     method: 'GET',
@@ -8,14 +9,14 @@ const GET_OPTIONS = {
     }
 }
 
-export const getFullMediaDetails = async (mediaId, mediaType) => {
+export const getFullMediaDetails = async (mediaId, mediaType, userRegion) => {
     try {
         const URL = `https://api.themoviedb.org/3/${mediaType}/${mediaId}?append_to_response=videos,watch/providers,credits`
         const response = await fetch(URL, GET_OPTIONS)
         const data = await response.json()
 
         const baseMediaDetails = extractMediaDetails(data, mediaType)
-        const providers = await extractProviders(data['watch/providers'])
+        const providers = extractProviders(data['watch/providers'], userRegion)
         const castAndCrew = extractCastAndCrew(data.credits)
         const fullMediaDetails = {
             ...baseMediaDetails,
@@ -70,8 +71,7 @@ const extractMediaDetails = (data, mediaType) => {
     return mediaDetails
 }
 
-const extractProviders = async (data) => {
-    const userRegion = await getUserRegion()
+const extractProviders = (data, userRegion) => {
     const regionData = data.results[userRegion]
         
     if (!regionData) {
@@ -138,7 +138,7 @@ export const fetchTvAutocomplete = async (userInput) => {
     }
 }
 
-export const getTrendingNow = async (provider, mediaType) => {
+export const getTrendingNow = async (provider, mediaType, userRegion) => {
     const providerIds = {
         "Netflix": 8,
         "Amazon Prime": 9,
@@ -149,15 +149,14 @@ export const getTrendingNow = async (provider, mediaType) => {
     const providerId = providerIds[provider]
 
     try {
-        const userRegion = await getUserRegion()
-        console.log(userRegion)
         const URL = `https://api.themoviedb.org/3/discover/${mediaType}?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&watch_region=${userRegion}&with_watch_providers=${providerId}`
      
         const response = await fetch(URL, GET_OPTIONS)
         const data = await response.json()
-        console.log(data)
+       
         const titlesWithPosters = data.results.map(t => ({
             ...t,
+            genres: getGenreNames(t.genre_ids, mediaType),
             poster: `https://image.tmdb.org/t/p/w200${t.poster_path}`
         }))
         

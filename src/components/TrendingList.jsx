@@ -53,7 +53,7 @@ export default function TrendingList({ data, isLoading }) {
             >
               {data.map((data) => 
                     <SwiperSlide>
-                      {isLoading ? <div className="skeleton h-48 w-48"></div>:
+                      {isLoading ? <div className="skeleton h-64 w-64"></div>:
                       <div key={data.id} className='overflow-hidden'>
                           <img
                             src={data.poster}

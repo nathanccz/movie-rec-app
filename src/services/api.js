@@ -7,9 +7,28 @@ export const getDashboardData = async() => {
     return data
 }
 
+// export const getUserRegionFromDB = async() => {
+//     try {
+//         const response = await fetch(`http://localhost:3000/api/dashboard`, {
+//             credentials: 'include'
+//         })
+
+//         if (!response.ok) {
+//             throw new Error('Failed to fetch user region');
+//         }
+
+//         const data = await response.json()
+
+//         return data.region
+//     } catch (error) {
+//         console.error('Error getting user region:', error);
+//         return null
+//     }
+// }
+
 export const addMovie = async(body) => {
     try {
-        const response = await fetch(`http://localhost:3000/api/movies/${body.movieId}/add`, {
+        const response = await fetch(`http://localhost:3000/api/movies/${body.tmdbId}/add`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(body),

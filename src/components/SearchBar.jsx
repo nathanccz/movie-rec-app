@@ -5,7 +5,8 @@ import { Icon } from "@iconify/react/dist/iconify.js"
 import ReviewModal from "./ReviewModal";
 import { addMovie, getMovie } from "../services/api";
 
-export default function SearchBar({ data }) {
+export default function SearchBar({ data, userData }) {
+    
     const [movieResults, setMovieResults] = useState([])
     const [tvResults, setTvResults] = useState([])
     const [inputText, setInputText] = useState('')
@@ -30,15 +31,17 @@ export default function SearchBar({ data }) {
         }
     }
 
-    const handleModalOpen = async (mediaId, mediaType) => { //NOTE: Add cache expiration to prevent stale data.
-        let dataFromLS = localStorage.getItem(mediaId),
-            dataFromDB
+    const handleModalOpen = async (tmdbId, mediaType) => { //NOTE: Add cache expiration to prevent stale data.
+        const region = userData?.country
 
+        let dataFromLS = localStorage.getItem(tmdbId),
+            dataFromDB
+        
         if (dataFromLS !== null) {
             setModalContent(JSON.parse(dataFromLS))
         } else {
             try {
-                const data = await getMovie(mediaId)
+                const data = await getMovie(tmdbId)
                 console.log(data)
                 dataFromDB = data[0] || null
                 if (dataFromDB) {
@@ -51,9 +54,10 @@ export default function SearchBar({ data }) {
             }
         } 
         
-        if (!dataFromLS && !dataFromDB) {
+        if (!dataFromLS && !dataFromDB && region) {
+            
             try {
-                const data = await getFullMediaDetails(mediaId, mediaType)
+                const data = await getFullMediaDetails(tmdbId, mediaType, region)
 
                 setModalContent(data)
                 handleAddMovie(data)
@@ -77,21 +81,8 @@ export default function SearchBar({ data }) {
 
     const handleAddMovie = async (data) => {
         try {
-            const body = {
-                movieId: data.id,
-                title: data.title,
-                year: data.year,
-                overview: data.overview,
-          
-                poster: data.poster,
-                type: data.type,
-                trailer: data.trailer,
-                sources: data.sources,
-                genres: data.genres,
-                user_rating: data.user_rating
-            }
-            localStorage.setItem(data.id, JSON.stringify(body))
-            const response = await addMovie(body)
+            localStorage.setItem(data.tmdbId, JSON.stringify(data))
+            const response = await addMovie(data)
 
             if (response.ok) {
                 console.log('movie added!')
