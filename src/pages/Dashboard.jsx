@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 
 export default function Dashboard({ route }) {
     const [userData, setUserData] = useState({})
+    const [activeRoute, setActiveRoute] = useState('index')
 
      useEffect(() => {
             if (Object.keys(userData).length > 0) {
@@ -30,9 +31,9 @@ export default function Dashboard({ route }) {
     
     return (
         <div class="flex w-full max-w-[1700px] mx-auto all 0.3s ease" id="pageWrapper">
-            <Sidebar userData={userData}/>
-            {route === 'index' && <DashboardMain userData={userData}/>}
-            {route === 'faves' && <Faves userData={userData}/>}
+            <Sidebar userData={userData} activeRoute={activeRoute}/>
+            {route === 'index' && <DashboardMain userData={userData} setActiveRoute={setActiveRoute}/>}
+            {route === 'faves' && <Faves userData={userData} setActiveRoute={setActiveRoute}/>}
         </div>
     )
 }

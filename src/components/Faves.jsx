@@ -5,11 +5,12 @@ import SearchBar from "./SearchBar";
 import { fetchMovieAutocomplete } from "../services/tmdb-api";
 
 
-export default function Faves({ userData }) {
+export default function Faves({ userData, setActiveRoute }) {
     const [faves, setFaves] = useState([])
     const [loading, setLoading] = useState(false)
    
     useEffect(() => {
+        setActiveRoute('faves')
         async function fetchFaves() {
             const data = await getFaves()
             console.log(data)

@@ -1,4 +1,4 @@
-export default function Sidebar({ userData }) {
+export default function Sidebar({ userData, activeRoute }) {
     const handleLogOut = (e) => {
         e.preventDefault()
         window.location.href = 'http://localhost:3000/api/logout'; // Redirect to backend Google OAuth route
@@ -22,7 +22,7 @@ export default function Sidebar({ userData }) {
                 <li>
                     <h2 className="menu-title text-xl text-gray-500">Discover</h2>
                     <ul className="text-lg">
-                        <li><a href="/dashboard">Watch Now</a></li>
+                        <li><a href="/dashboard" className={activeRoute === 'index' && 'bg-gray-500'}>Watch Now</a></li>
                         <li><a>Browse</a></li>
                         <li><a>DeepSearch</a></li>
                         <li><a>Hidden Gems</a></li>
@@ -32,8 +32,8 @@ export default function Sidebar({ userData }) {
                     <h2 className="menu-title text-xl text-gray-500">Collection</h2>
                     <ul className="text-lg">
                         <li><a>Watchlist</a></li>
-                        <li><a href="/faves">Faves</a></li>
-                        <li><a>Made for You</a></li>
+                        <li><a href="/faves" className={activeRoute === 'faves' && 'bg-gray-500'}>My Faves</a></li>
+                        <li><a>My Reviews</a></li>
                         <li><a>Directors</a></li>
                         <li><a>Genres</a></li>
                     </ul>
