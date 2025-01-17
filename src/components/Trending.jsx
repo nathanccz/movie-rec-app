@@ -13,7 +13,7 @@ export default function Trending() {
         setIsLoading(true)
         async function fetchTrendingShows() {
             try {
-                const data = await getTrendingNow(streamingService, mediaType)
+                const data = await getTrendingNow(streamingService, mediaType, 'US')
                 console.log(data)
                 setTitles(data);
                 setIsLoading(false)

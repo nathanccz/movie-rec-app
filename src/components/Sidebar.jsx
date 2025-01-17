@@ -20,26 +20,27 @@ export default function Sidebar({ userData }) {
             </div>
             <ul className="menu bg-black rounded-box w-full font-bold">
                 <li>
-                    <h2 className="menu-title text-xl">Discover</h2>
-                    <ul>
-                        <li><a>Watch Now</a></li>
+                    <h2 className="menu-title text-xl text-gray-500">Discover</h2>
+                    <ul className="text-lg">
+                        <li><a href="/dashboard">Watch Now</a></li>
                         <li><a>Browse</a></li>
-                        <li><a>Claude AI</a></li>
+                        <li><a>DeepSearch</a></li>
+                        <li><a>Hidden Gems</a></li>
                     </ul>
                 </li>
                 <li>
-                    <h2 className="menu-title text-xl">Collection</h2>
-                    <ul>
+                    <h2 className="menu-title text-xl text-gray-500">Collection</h2>
+                    <ul className="text-lg">
                         <li><a>Watchlist</a></li>
-                        <li><a>Faves</a></li>
+                        <li><a href="/faves">Faves</a></li>
                         <li><a>Made for You</a></li>
                         <li><a>Directors</a></li>
                         <li><a>Genres</a></li>
                     </ul>
                 </li>
                 <li>
-                    <h2 className="menu-title text-xl">Playlists</h2>
-                    <ul>
+                    <h2 className="menu-title text-xl text-gray-500">Playlists</h2>
+                    <ul className="text-lg">
                         <li><a>Recently Added</a></li>
                         <li><a>Recently Played</a></li>
                         <li><a>Top Movies</a></li>

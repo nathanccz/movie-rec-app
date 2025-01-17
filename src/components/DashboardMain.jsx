@@ -46,11 +46,6 @@ export default function DashboardMain({ userData }) {
                 <MediaCard data={tvShows} loading={loading}/>
             </div>
             
-            <h2 class="text-3xl font-bold mb-2 text-white"> <i class="fa-regular fa-star"></i> Hidden Gems </h2>
-            <span class="text-white">Lesser-known titles you may enjoy.</span>
-            
-            <div className="divider divider-neutral"></div>
-            
         </main>
     )
 }

@@ -88,3 +88,47 @@ export const getRecommendations = async (userID) => {
         console.log('Error getting movie recommendations:', error)
     }
 }
+
+export const addFave = async (mediaId) => {
+    try {
+        const URL = `http://localhost:3000/api/movies/${mediaId}/fave`
+        const response = await fetch(URL, {
+            method: 'POST',
+            credentials: 'include'
+        })
+
+        if (!response.ok) {
+            if (response.status === 400) {
+                throw new Error('Bad Request: Invalid movie data');
+            } else if (response.status === 404) {
+                throw new Error('Not Found: Endpoint does not exist');
+            } else {
+                throw new Error('Server error, please try again later');
+            }
+        } else {
+            return true
+        }
+           
+    } catch (error) {
+        console.log('Error adding title to favorites:', error)
+    }
+}
+
+export const getFaves = async () => {
+    try {
+        const URL = `http://localhost:3000/api/movies/faves/all`
+        const response = await fetch(URL, {
+            credentials: 'include'
+        })
+        console.log(response)
+        if (!response.ok) {
+            throw new Error('Failed to fetch faves');
+        }
+
+        const data = await response.json()
+        console.log(data)
+        return data.faves
+    } catch (error) {
+        console.log('Error getting favorites:', error)
+    }
+}

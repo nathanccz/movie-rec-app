@@ -7,6 +7,7 @@ import 'aos/dist/aos.css';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 
+
 const App = () => {
     useEffect(() => {
         Aos.init({ once: true });
@@ -21,7 +22,10 @@ const App = () => {
                     <Route index element={<Login />} />
                 </Route>
                 <Route path="/dashboard">
-                    <Route index element={<Dashboard />} />
+                    <Route index element={<Dashboard route={'index'}/>} />
+                </Route>
+                <Route path="/faves">
+                    <Route index element={<Dashboard route={'faves'}/>} />
                 </Route>
             </Routes>
         </BrowserRouter>
