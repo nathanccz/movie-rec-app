@@ -27,6 +27,9 @@ const App = () => {
                 <Route path="/faves">
                     <Route index element={<Dashboard route={'faves'}/>} />
                 </Route>
+                <Route path="/reviews">
+                    <Route index element={<Dashboard route={'reviews'}/>} />
+                </Route>
             </Routes>
         </BrowserRouter>
     )

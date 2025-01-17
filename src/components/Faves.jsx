@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react"
 import { getFaves } from "../services/api";
-import MediaCard from "./MediaCard";
 import SearchBar from "./SearchBar";
-import { fetchMovieAutocomplete } from "../services/tmdb-api";
 
 
 export default function Faves({ userData, setActiveRoute }) {

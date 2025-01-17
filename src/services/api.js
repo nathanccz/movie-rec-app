@@ -7,24 +7,24 @@ export const getDashboardData = async() => {
     return data
 }
 
-// export const getUserRegionFromDB = async() => {
-//     try {
-//         const response = await fetch(`http://localhost:3000/api/dashboard`, {
-//             credentials: 'include'
-//         })
+export const getUserRegionFromDB = async() => {
+    try {
+        const response = await fetch(`http://localhost:3000/api/dashboard`, {
+            credentials: 'include'
+        })
 
-//         if (!response.ok) {
-//             throw new Error('Failed to fetch user region');
-//         }
+        if (!response.ok) {
+            throw new Error('Failed to fetch user region');
+        }
 
-//         const data = await response.json()
+        const data = await response.json()
 
-//         return data.region
-//     } catch (error) {
-//         console.error('Error getting user region:', error);
-//         return null
-//     }
-// }
+        return data.region
+    } catch (error) {
+        console.error('Error getting user region:', error);
+        return null
+    }
+}
 
 export const addMovie = async(body) => {
     try {
@@ -130,5 +130,53 @@ export const getFaves = async () => {
         return data.faves
     } catch (error) {
         console.log('Error getting favorites:', error)
+    }
+}
+
+export const getReviews = async () => {
+    try {
+        const URL = `http://localhost:3000/api/movies/reviews/all`
+        const response = await fetch(URL, {
+            credentials: 'include'
+        })
+        console.log(response)
+        if (!response.ok) {
+            throw new Error('Failed to fetch reviews');
+        }
+
+        const data = await response.json()
+        console.log(data)
+        return data.reviews
+    } catch (error) {
+        console.log('Error getting reviews:', error)
+    }
+}
+
+export const addReview = async (mediaId, text) => {
+    try {
+        const URL = `http://localhost:3000/api/movies/${mediaId}/review`
+        const response = await fetch(URL, {
+            method: 'POST',
+            headers: {'Content-type': 'application/json'},
+            body: JSON.stringify({
+                'text': text
+            }),
+            credentials: 'include'
+        })
+
+        if (!response.ok) {
+            if (response.status === 400) {
+                throw new Error('Bad Request: Invalid movie data');
+            } else if (response.status === 404) {
+                throw new Error('Not Found: Endpoint does not exist');
+            } else {
+                throw new Error('Server error, please try again later');
+            }
+        } else {
+            return true
+        }
+           
+    } catch (error) {
+        console.log('Error saving review:', error)
     }
 }

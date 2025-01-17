@@ -1,6 +1,7 @@
 import DashboardMain from "../components/DashboardMain";
 import Sidebar from "../components/Sidebar";
 import Faves from "../components/Faves";
+import Reviews from "../components/Reviews";
 import { getDashboardData } from "../services/api";
 import { useState, useEffect } from "react";
 
@@ -34,6 +35,7 @@ export default function Dashboard({ route }) {
             <Sidebar userData={userData} activeRoute={activeRoute}/>
             {route === 'index' && <DashboardMain userData={userData} setActiveRoute={setActiveRoute}/>}
             {route === 'faves' && <Faves userData={userData} setActiveRoute={setActiveRoute}/>}
+            {route === 'reviews' && <Reviews userData={userData} setActiveRoute={setActiveRoute}/>}
         </div>
     )
 }

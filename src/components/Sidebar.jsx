@@ -33,7 +33,7 @@ export default function Sidebar({ userData, activeRoute }) {
                     <ul className="text-lg">
                         <li><a>Watchlist</a></li>
                         <li><a href="/faves" className={activeRoute === 'faves' && 'bg-gray-500'}>My Faves</a></li>
-                        <li><a>My Reviews</a></li>
+                        <li><a href="/reviews" className={activeRoute === 'reviews' && 'bg-gray-500'}>My Reviews</a></li>
                         <li><a>Directors</a></li>
                         <li><a>Genres</a></li>
                     </ul>
