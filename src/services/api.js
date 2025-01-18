@@ -180,3 +180,22 @@ export const addReview = async (mediaId, text) => {
         console.log('Error saving review:', error)
     }
 }
+
+export const deleteReview = async (mongoId) => {
+    try {
+        const URL = `http://localhost:3000/api/movies/${mongoId}/delete`
+        const response = await fetch(URL, {
+            method: 'DELETE',
+            credentials: 'include'
+        })
+
+        if (response.ok) {
+            return true
+        }
+
+        return null
+    } catch (error) {
+        console.log('Error deleting review:', error)
+        return null
+    }
+}

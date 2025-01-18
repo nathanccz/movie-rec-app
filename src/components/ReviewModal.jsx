@@ -5,7 +5,6 @@ import { addReview } from "../services/api";
 import { useState } from "react";
 import Toast from "./Toast";
 
-
 export default function ReviewModal({ data }) {
     const [review, setReview] = useState('')
     const [loading, setLoading] = useState(false)
@@ -37,7 +36,6 @@ export default function ReviewModal({ data }) {
     }
 
     return (
- 
         <dialog id="my_modal_4" className="modal">
             <div className="modal-box max-w-5xl border">
                 <form method="dialog">
@@ -62,6 +60,5 @@ export default function ReviewModal({ data }) {
             </div>
             {toastActive && <Toast text={'Review saved!'}/>}
         </dialog>
-   
     )
 }

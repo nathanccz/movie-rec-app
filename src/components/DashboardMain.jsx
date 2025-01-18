@@ -4,6 +4,7 @@ import MediaCard from "./MediaCard";
 import SearchBar from "./SearchBar";
 
 
+
 export default function DashboardMain({ userData }) {
     const [movies, setMovies] = useState([])
     const [tvShows, setTvShows] = useState([])
@@ -45,7 +46,6 @@ export default function DashboardMain({ userData }) {
             <div className="flex lg:flex-row overflow-x-scroll mb-8 gap-5 w-full"> 
                 <MediaCard data={tvShows} loading={loading}/>
             </div>
-            
         </main>
     )
 }
