@@ -1,14 +1,17 @@
 import { useState, useEffect } from "react"
-import { getReviews, deleteReview } from "../services/api";
+import { getReviews, deleteReview, editReview } from "../services/api";
 import ReviewCard from "./ReviewCard";
 import SearchBar from "./SearchBar";
 import DeleteModal from "./DeleteModal";
 import Toast from "./Toast";
+import EditReviewModal from "./EditReviewModal"
 
 export default function Reviews({ userData, setActiveRoute }) {
     const [reviews, setReviews] = useState([])
     const [activeReview, setActiveReview] = useState('')
     const [toastActive, setToastActive] = useState(false)
+    const [isEditing, setIsEditing] = useState(false)
+    const [isDeleting, setIsDeleting] = useState(false)
    
     useEffect(() => {
         setActiveRoute('reviews')
@@ -25,6 +28,7 @@ export default function Reviews({ userData, setActiveRoute }) {
     const handleOpenDelModal = (mongoId) => {
         console.log(mongoId)
         if (mongoId) {
+            setIsDeleting(true)
             setActiveReview(mongoId)
         }
         document.getElementById('my_modal_del').showModal()
@@ -40,12 +44,37 @@ export default function Reviews({ userData, setActiveRoute }) {
                     setReviews(reviews.filter(r => r.mongoId !== activeReview))
                     await new Promise(resolve => setTimeout(resolve, 3000))
                     setToastActive(false)
+                    setIsDeleting(false)
                     setActiveReview('')
                     console.log('review deleted!')
                 }
             } catch (error) {
                 console.log(error)
             }
+        }
+    }
+
+    const handleOpenEditModal = (mongoId) => {
+        console.log(mongoId)
+        if (mongoId) {
+            setIsEditing(true)
+            setActiveReview(mongoId)
+        }
+        document.getElementById('my_modal_edit').showModal()
+    }
+
+    const handleEditReview = async (mongoId) => {
+        
+        try {
+            const response = editReview(mongoId)
+
+            if (response) {
+                setToastActive(true)
+                await new Promise(resolve => setTimeout(resolve, 3000))
+                setToastActive(false)
+            }
+        } catch (error) {
+            console.log(error)
         }
     }
 
@@ -58,11 +87,13 @@ export default function Reviews({ userData, setActiveRoute }) {
             
             <div className="w-full flex flex-wrap gap-3">
                 {reviews.map(review =>
-                    <ReviewCard mongoId={review.mongoId} poster={review.poster} title={review.title} text={review.text} key={review.mongoId} handleOpenDelModal={() => handleOpenDelModal(review.mongoId)}/>
+                    <ReviewCard mongoId={review.mongoId} poster={review.poster} title={review.title} text={review.text} key={review.mongoId} handleOpenDelModal={handleOpenDelModal} handleOpenEditModal={handleOpenEditModal}/>
                 )}
             </div>
             <DeleteModal handleDeleteReview={handleDeleteReview} toastActive={toastActive}/>
-            {toastActive && <Toast text={'Review deleted!'}/>}
+            <EditReviewModal handleEditReview={handleEditReview} toastActive={toastActive} data={reviews.filter(r => r.mongoId === activeReview)} setIsEditing={setIsEditing} reviews={reviews} setReviews={setReviews}/>
+            {toastActive && isDeleting && <Toast text={'Review deleted!'}/>}
+            {toastActive && isEditing && <Toast text={'Your review has been updated!'}/>}
         </main>
     )
 }

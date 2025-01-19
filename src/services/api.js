@@ -199,3 +199,25 @@ export const deleteReview = async (mongoId) => {
         return null
     }
 }
+
+export const editReview = async (mongoId, text) => {
+    try {
+        const URL = `http://localhost:3000/api/movies/${mongoId}/review/edit`
+        const response = await fetch(URL, {
+            method: 'PUT',
+            headers: {'Content-type': 'application/json'},
+            body: JSON.stringify({
+                'text': text
+            }),
+            credentials: 'include'
+        })
+
+        if (response.ok) {
+            return true
+        }
+
+        return null
+    } catch (error) {
+        console.log(error)
+    }
+}

@@ -5,7 +5,7 @@ import SearchBar from "./SearchBar";
 
 
 
-export default function DashboardMain({ userData }) {
+export default function DashboardMain({ userData, isMobile }) {
     const [movies, setMovies] = useState([])
     const [tvShows, setTvShows] = useState([])
     const [loading, setLoading] = useState(false)
@@ -32,8 +32,8 @@ export default function DashboardMain({ userData }) {
        }, [])
 
     return (
-        <main class="p-10 bg-black w-full h-screen bg-main-background bg-cover rounded-tl-lg border-r-[1px] border-gray-400 overflow-y-scroll relative">
-            <SearchBar userData={userData} />
+        <main class={" bg-black w-full h-screen bg-main-background bg-cover rounded-tl-lg border-r-[1px] border-gray-400 overflow-y-scroll relative" + `${isMobile ? ' p-2' : ' p-10'}`}>
+            {!isMobile && <SearchBar userData={userData} />}
             <h1 className="text-3xl font-bold mb-2 text-white"> <i class="fa-regular fa-star"></i> Watch Now </h1>
             <span className="text-white">Top movies for you. Updated daily.</span>
 

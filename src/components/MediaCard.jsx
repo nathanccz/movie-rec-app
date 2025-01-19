@@ -2,7 +2,7 @@ export default function MediaCard({ data, loading }) {
     return (
         <>
             {!loading && data ? data.map(m =>
-            <div className="card bg-base-100 w-96 shadow-xl lg:min-w-[200px]" key={m.tmdbId}>
+            <div className="card bg-base-100 min-w-[150px] shadow-xl lg:min-w-[200px]" key={m.tmdbId}>
                 <figure>
                     <img
                     src={m.poster}

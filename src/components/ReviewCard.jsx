@@ -1,7 +1,13 @@
 import { Icon } from "@iconify/react/dist/iconify.js"
 
-export default function MediaCard({ poster, title, text, handleOpenDelModal }) {
+
+export default function MediaCard({ mongoId, poster, title, text, handleOpenDelModal, handleOpenEditModal }) {
+
+    
+
+
     return (
+
         <div className="card bg-base-100 w-96 shadow-xl">
             <figure>
                 <img
@@ -17,12 +23,13 @@ export default function MediaCard({ poster, title, text, handleOpenDelModal }) {
                     Show More
                 </div>
                 <div className="card-actions justify-end">
-                    <button className="btn btn-primary">
+                    <button className="btn btn-primary" onClick={() => handleOpenEditModal(mongoId)}>
                         <Icon icon="material-symbols:edit-outline" className='text-xl'/>Edit Review
                     </button>
-                    <button className="btn" onClick={handleOpenDelModal}><Icon icon="material-symbols:delete-outline" className='text-xl'/></button>
+                    <button className="btn" onClick={() => handleOpenDelModal(mongoId)}><Icon icon="material-symbols:delete-outline" className='text-xl'/></button>
                 </div>
             </div>
         </div>
+
     )
 }
