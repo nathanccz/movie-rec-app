@@ -4,6 +4,7 @@ import Faves from "../components/Faves";
 import Reviews from "../components/Reviews";
 import { getDashboardData } from "../services/api";
 import { useState, useEffect } from "react";
+import Watchlist from "../components/Watchlist";
 
 export default function Dashboard({ route }) {
     const [userData, setUserData] = useState({})
@@ -53,6 +54,7 @@ export default function Dashboard({ route }) {
             {route === 'index' && <DashboardMain userData={userData} setActiveRoute={setActiveRoute} isMobile={isMobile}/>}
             {route === 'faves' && <Faves userData={userData} setActiveRoute={setActiveRoute}/>}
             {route === 'reviews' && <Reviews userData={userData} setActiveRoute={setActiveRoute}/>}
+            {route === 'watchlist' && <Watchlist userData={userData} setActiveRoute={setActiveRoute}/>}
         </div>
     )
 }

@@ -128,7 +128,7 @@ export default function SearchBar({ data, userData }) {
                             </figure>
                             <div className="card-body">
                                 <h2 className="card-title">{r.title}</h2>
-                                <p>{r.release_date.split('-')[0]}</p>
+                                <p>{r.release_date?.split('-')[0]}</p>
                             </div>
                         </div>
                     )}

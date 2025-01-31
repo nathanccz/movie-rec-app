@@ -30,6 +30,9 @@ const App = () => {
                 <Route path="/reviews">
                     <Route index element={<Dashboard route={'reviews'}/>} />
                 </Route>
+                <Route path="/watchlist">
+                    <Route index element={<Dashboard route={'watchlist'}/>} />
+                </Route>
             </Routes>
         </BrowserRouter>
     )

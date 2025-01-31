@@ -2,13 +2,20 @@ import FaveButton from "./FaveButton";
 import Rating from "./Rating";
 import SaveButton from "./SaveButton";
 import { addReview } from "../services/api";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Toast from "./Toast";
 
 export default function ReviewModal({ data }) {
     const [review, setReview] = useState('')
     const [loading, setLoading] = useState(false)
     const [toastActive, setToastActive] = useState(false)
+    const [rating, setRating] = useState(0)
+
+    useEffect(() => {
+        async function getRatingFromDB() {
+            
+        }
+    }, [])
 
     const handleChange = (event) => {
         setReview(event.target.value)

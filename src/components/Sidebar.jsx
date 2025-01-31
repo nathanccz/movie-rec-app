@@ -96,7 +96,7 @@ export default function Sidebar({ userData, activeRoute, isMobile, handleLogOut 
                 <li>
                     <h2 className="menu-title text-xl text-gray-500">Collection</h2>
                     <ul className="text-lg">
-                        <li><a>Watchlist</a></li>
+                        <li><a href='/watchlist'>Watchlist</a></li>
                         <li><a href="/faves" className={activeRoute === 'faves' && 'bg-gray-500'}>My Faves</a></li>
                         <li><a href="/reviews" className={activeRoute === 'reviews' && 'bg-gray-500'}>My Reviews</a></li>
                         <li><a>Directors</a></li>

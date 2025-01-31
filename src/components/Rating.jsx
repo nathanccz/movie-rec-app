@@ -6,6 +6,10 @@ export default function Rating() {
     const handleMouseEnter = (index) => setHoveredIndex(index); // Set hovered index on mouse enter
     const handleMouseLeave = () => setHoveredIndex(null); // Reset hovered index on mouse leave
 
+    const handleAddRating = () => {
+
+    }
+
     return (
         <div className="rating">
             {[0, 1, 2, 3, 4].map((index) => (
@@ -16,6 +20,7 @@ export default function Rating() {
                     className="mask mask-star"
                     onMouseEnter={() => handleMouseEnter(index)} // Set hovered state for the specific button
                     onMouseLeave={handleMouseLeave}
+                    onClick={handleAddRating}
                     checked={hoveredIndex === index} // Only the hovered radio button should be checked
                 />
             ))}
