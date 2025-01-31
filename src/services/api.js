@@ -221,3 +221,47 @@ export const editReview = async (mongoId, text) => {
         console.log(error)
     }
 }
+
+export const addToWatchlist = async (mediaId) => {
+    try {
+        const URL = `http://localhost:3000/api/movies/${mediaId}/watchlist`
+        const response = await fetch(URL, {
+            method: 'POST',
+            credentials: 'include'
+        })
+
+        if (!response.ok) {
+            if (response.status === 400) {
+                throw new Error('Bad Request: Invalid movie data');
+            } else if (response.status === 404) {
+                throw new Error('Not Found: Endpoint does not exist');
+            } else {
+                throw new Error('Server error, please try again later');
+            }
+        } else {
+            return true
+        }
+           
+    } catch (error) {
+        console.log('Error adding title to favorites:', error)
+    }
+}
+
+export const getWatchlist = async () => {
+    try {
+        const URL = `http://localhost:3000/api/movies/watchlist/all`
+        const response = await fetch(URL, {
+            credentials: 'include'
+        })
+        console.log(response)
+        if (!response.ok) {
+            throw new Error('Failed to fetch watchlist');
+        }
+
+        const data = await response.json()
+        console.log(data)
+        return data.watchlist
+    } catch (error) {
+        console.log('Error getting watchlist:', error)
+    }
+}

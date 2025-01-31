@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { addFave } from "../services/api";
+import { addFave, addToWatchlist } from "../services/api";
 import Trailer from "./Trailer";
 import FaveButton from "./FaveButton";
 import WatchlistButton from "./WatchlistButton";
@@ -50,6 +50,20 @@ export default function Modal({ data, setModalContent, handleReviewModalOpen }) 
         
     }
 
+    const handleAddToWatchlist = async (mediaId) => {
+        if (mediaId) {
+            try {
+                const response = await addToWatchlist(mediaId) 
+
+                if (response.ok) {
+                    console.log('Added to watchlist!')
+                }
+            } catch (error) {
+                console.log('Error adding to watchlist:', error)
+            }
+        }
+    }
+
     return (
         <dialog id="my_modal_3" className="modal">
             <div className="modal-box lg:max-w-4xl border">
@@ -59,7 +73,7 @@ export default function Modal({ data, setModalContent, handleReviewModalOpen }) 
                 <h1 className="text-3xl font-bold mb-3 text-white">{data.title} {`(${data.release_date?.split('-')[0]})`}</h1>
                 <div className="flex gap-3">
                     <FaveButton data={data} handleAddFave={handleAddFave}/>
-                    <WatchlistButton data={data}/>
+                    <WatchlistButton data={data} handleAddToWatchlist={handleAddToWatchlist}/>
                     <ReviewButton data={data} handleReviewModalOpen={handleReviewModalOpen}/>
                 </div>
                 <div>

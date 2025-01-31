@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { getFaves } from "../services/api";
+import { getWatchlist } from "../services/api";
 import SearchBar from "./SearchBar";
 
 
@@ -27,9 +27,9 @@ export default function Watchlist({ userData, setActiveRoute }) {
             <div className="divider divider-neutral"></div>
             
             <div className="w-full flex flex-wrap gap-3">
-                {watchlist.map(fave =>
-                    <div key={fave.tmdbId}>
-                        <img src={fave.poster} alt={`poster for ${fave.title}`} className="lg:w-[200px] lg:h-[300px]"/>
+                {watchlist.map(title =>
+                    <div key={title.tmdbId}>
+                        <img src={title.poster} alt={`poster for ${title.title}`} className="lg:w-[200px] lg:h-[300px]"/>
                     </div>
                 )}
             </div>
