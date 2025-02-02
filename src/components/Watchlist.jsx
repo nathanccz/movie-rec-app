@@ -29,7 +29,7 @@ export default function Watchlist({ userData, setActiveRoute }) {
             <div className="w-full flex flex-wrap gap-3">
                 {watchlist.map(title =>
                     <div key={title.tmdbId}>
-                        <img src={title.poster} alt={`poster for ${title.title}`} className="lg:w-[200px] lg:h-[300px]"/>
+                        <img src={title.poster} alt={`poster for ${title.title}`} className="lg:w-[200px] lg:h-[300px] cursor-pointer hover:scale-110 ease-in-out duration-500 w-full h-full"/>
                     </div>
                 )}
             </div>

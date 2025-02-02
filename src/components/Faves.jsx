@@ -29,7 +29,7 @@ export default function Faves({ userData, setActiveRoute }) {
             <div className="w-full flex flex-wrap gap-3">
                 {faves.map(fave =>
                     <div key={fave.tmdbId}>
-                        <img src={fave.poster} alt={`poster for ${fave.title}`} className="lg:w-[200px] lg:h-[300px]"/>
+                        <img src={fave.poster} alt={`poster for ${fave.title}`} className="lg:w-[200px] lg:h-[300px] cursor-pointer hover:scale-110 ease-in-out duration-500 w-full h-full"/>
                     </div>
                 )}
             </div>

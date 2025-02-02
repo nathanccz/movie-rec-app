@@ -2,31 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.sidebarItem {
-    @apply py-3 bg-slate-800 rounded mx-3 pl-5 cursor-pointer hover:bg-slate-600 ease-in-out duration-300;
-}
-
-.todoItem {
-    @apply py-3 bg-slate-800 rounded-lg cursor-pointer hover:bg-slate-600 opacity-95 text-white;
-}
-
-.my-drawer li:not(.nohover) {
-    @apply py-2 px-2 bg-slate-800 rounded cursor-pointer hover:bg-slate-600;
-}
-
-.my-drawer a {
-    @apply flex gap-3 items-center;
-}
-
-.completed{
-    text-decoration: line-through;
-    color: gray;
-}
-
-.hidden {
-    display: none;
-}
-
 #pageWrapper.blurred {
     filter: blur(5px); /* Adjust the blur strength */
 }
