@@ -1,7 +1,7 @@
 import { Icon } from "@iconify/react/dist/iconify.js"
 import { useState, useEffect } from "react"
 
-export default function WatchlistButton({ data, handleAddToWatchlist }) {
+export default function WatchlistButton({ data, handleAddToWatchlist, setToastActive }) {
     const [mediaId, setMediaId] = useState('')
        const [loading, setLoading] = useState(false)
        
@@ -21,9 +21,12 @@ export default function WatchlistButton({ data, handleAddToWatchlist }) {
     
         try {
             await handleAddToWatchlist(mediaId)
+            setToastActive(true)
         } catch (error) {
             console.error("Error adding favorite:", error);
         } finally {
+            await new Promise(resolve => setTimeout(resolve, 3000))
+            setToastActive(false)
             setLoading(false)
         }
        }

@@ -4,8 +4,10 @@ import Trailer from "./Trailer";
 import FaveButton from "./FaveButton";
 import WatchlistButton from "./WatchlistButton";
 import ReviewButton from "./ReviewButton";
+import Toast from "./Toast";
 
 export default function Modal({ data, setModalContent, handleReviewModalOpen }) {
+    const [toastActive, setToastActive] = useState(false)
 
     const handleModalClose = () => {
         setModalContent({})
@@ -73,7 +75,7 @@ export default function Modal({ data, setModalContent, handleReviewModalOpen }) 
                 <h1 className="text-3xl font-bold mb-3 text-white">{data.title} {`(${data.release_date?.split('-')[0]})`}</h1>
                 <div className="flex gap-3">
                     <FaveButton data={data} handleAddFave={handleAddFave}/>
-                    <WatchlistButton data={data} handleAddToWatchlist={handleAddToWatchlist}/>
+                    <WatchlistButton data={data} handleAddToWatchlist={handleAddToWatchlist} setToastActive={setToastActive}/>
                     <ReviewButton data={data} handleReviewModalOpen={handleReviewModalOpen}/>
                 </div>
                 <div>
@@ -85,6 +87,7 @@ export default function Modal({ data, setModalContent, handleReviewModalOpen }) 
                     {streamSourcesList}
                 </div>
             </div>
+            {toastActive && <Toast text={'Added to watchlist!'}/>}
         </dialog>
     )
 }
