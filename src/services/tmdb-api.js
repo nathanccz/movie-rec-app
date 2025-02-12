@@ -14,7 +14,7 @@ export const getFullMediaDetails = async (mediaId, mediaType, userRegion) => {
         const URL = `https://api.themoviedb.org/3/${mediaType}/${mediaId}?append_to_response=videos,watch/providers,credits`
         const response = await fetch(URL, GET_OPTIONS)
         const data = await response.json()
-
+        console.log('FULL DATA', data)
         const baseMediaDetails = extractMediaDetails(data, mediaType)
         const providers = extractProviders(data['watch/providers'], userRegion)
         const castAndCrew = extractCastAndCrew(data.credits)
@@ -157,7 +157,8 @@ export const getTrendingNow = async (provider, mediaType, userRegion) => {
         const titlesWithPosters = data.results.map(t => ({
             ...t,
             genres: getGenreNames(t.genre_ids, mediaType),
-            poster: `https://image.tmdb.org/t/p/w200${t.poster_path}`
+            poster: `https://image.tmdb.org/t/p/w200${t.poster_path}`,
+            mediaType: mediaType
         }))
         
         return titlesWithPosters

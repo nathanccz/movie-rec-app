@@ -66,7 +66,7 @@ export default function SearchBar({ data, userData }) {
             }
         }
  
-        document.getElementById('my_modal_3').showModal()
+        document.getElementById('search-bar').showModal()
     }
 
     const handleClearInput = () => {
@@ -119,7 +119,7 @@ export default function SearchBar({ data, userData }) {
                         <a role="tab" className="tab">TV Shows</a>
                     </div>
                     {movieResults.map(r => 
-                        <div className="card w-full card-side bg-base-100 shadow-xl px-4 cursor-pointer hover:bg-slate-600 ease-in-out duration-300" key={r.id} onClick={() => handleModalOpen(r.id, 'movie')}>
+                        <div className="card w-full card-side bg-base-100 shadow-xl px-4 cursor-pointer hover:bg-slate-600 ease-in-out duration-300" key={r.id} onClick={() => handleModalOpen(r.id, 'movie', 'search-bar')}>
                             <figure>
                             <img
                                 src={r.poster}
@@ -136,7 +136,7 @@ export default function SearchBar({ data, userData }) {
             </div>
             }
         </div>
-        <Modal data={modalContent} setModalContent={setModalContent} handleReviewModalOpen={handleReviewModalOpen}/>
+        <Modal data={modalContent} setModalContent={setModalContent} handleReviewModalOpen={handleReviewModalOpen} modalOrigin={'search-bar'}/>
         <ReviewModal data={modalContent} setModalContent={setModalContent}/>
         </>
     )

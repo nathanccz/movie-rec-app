@@ -1,9 +1,13 @@
+import { useModalContext } from "./modal-context";
+
 export default function MediaCard({ data, loading }) {
+    const {handleModalOpen} = useModalContext()
+
     return (
         <>
             {!loading && data ? data.map(m =>
-            <div className="card bg-base-100 min-w-[150px] shadow-xl lg:min-w-[200px]" key={m.tmdbId}>
-                <figure>
+            <div className="card bg-base-100 min-w-[150px] shadow-xl lg:min-w-[200px]" key={m.id}>
+                <figure onClick={() => handleModalOpen(m.id, m.mediaType)}>
                     <img
                     src={m.poster}
                     alt={m.title || m.name} 

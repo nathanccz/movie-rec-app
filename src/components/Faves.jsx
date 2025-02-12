@@ -1,11 +1,18 @@
 import { useState, useEffect } from "react"
 import { getFaves } from "../services/api";
 import SearchBar from "./SearchBar";
+import { useModalContext } from "./modal-context";
 
 
-export default function Faves({ userData, setActiveRoute }) {
+
+export default function Faves({ userData, setActiveRoute, activeRoute }) {
     const [faves, setFaves] = useState([])
     const [loading, setLoading] = useState(false)
+    const {handleModalOpen} = useModalContext()
+
+    const handleReviewModalOpen = () => {
+        document.getElementById('my_modal_4').showModal()
+    }
    
     useEffect(() => {
         setActiveRoute('faves')
@@ -28,11 +35,12 @@ export default function Faves({ userData, setActiveRoute }) {
             
             <div className="w-full flex flex-wrap gap-3">
                 {faves.map(fave =>
-                    <div key={fave.tmdbId}>
+                    <div key={fave.tmdbId} onClick={() => handleModalOpen(fave.tmdbId, fave.mediaType, activeRoute)}>
                         <img src={fave.poster} alt={`poster for ${fave.title}`} className="lg:w-[200px] lg:h-[300px] cursor-pointer hover:scale-110 ease-in-out duration-500 w-full h-full"/>
                     </div>
                 )}
             </div>
+           
         </main>
     )
 }

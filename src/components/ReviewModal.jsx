@@ -12,9 +12,7 @@ export default function ReviewModal({ data }) {
     const [rating, setRating] = useState(0)
 
     useEffect(() => {
-        async function getRatingFromDB() {
-            
-        }
+        console.log(data)
     }, [])
 
     const handleChange = (event) => {

@@ -1,9 +1,12 @@
 import { createContext, useContext, useState } from "react";
 import { getFullMediaDetails } from "../services/tmdb-api";
+import { addMovie, getMovie } from "../services/api";
+import ReviewModal from "./ReviewModal";
+import Modal from "./Modal";
 
 export const ModalContext = createContext(null)
 
-export default function ModalContextProvider({ children }) {
+export default function ModalContextProvider({ children, activeRoute }) {
     const [modalContent, setModalContent] = useState({})
 
      const handleModalOpen = async (tmdbId, mediaType) => { //NOTE: Add cache expiration to prevent stale data.
@@ -42,8 +45,25 @@ export default function ModalContextProvider({ children }) {
                 }
             }
      
-            document.getElementById('my_modal_3').showModal()
+            document.getElementById(activeRoute).showModal()
         }
+    
+    const handleAddMovie = async (data) => {
+        try {
+            localStorage.setItem(data.tmdbId, JSON.stringify(data))
+            const response = await addMovie(data)
+
+            if (response.ok) {
+                console.log('movie added!')
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const handleReviewModalOpen = () => {
+        document.getElementById('my_modal_4').showModal()
+    }
 
     return (
         <ModalContext.Provider
@@ -54,6 +74,8 @@ export default function ModalContextProvider({ children }) {
             }}
         >
             {children}
+            <Modal data={modalContent} setModalContent={setModalContent} handleModalOpen={handleModalOpen} activeRoute={activeRoute} handleReviewModalOpen={handleReviewModalOpen}/>
+            <ReviewModal data={modalContent} setModalContent={setModalContent}/>
         </ModalContext.Provider>
     )
 }

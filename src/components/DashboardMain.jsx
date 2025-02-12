@@ -20,7 +20,7 @@ export default function DashboardMain({ userData, isMobile }) {
                     setUserRegion(userData.country)
                     const movieData = await getTrendingNow('Netflix', 'movie', userRegion)
                     const tvData = await getTrendingNow('Netflix', 'tv', userRegion)
-                 
+                    console.log('movies from index', movieData)
                     setMovies(movieData);
                     setTvShows(tvData);
                     setLoading(false)

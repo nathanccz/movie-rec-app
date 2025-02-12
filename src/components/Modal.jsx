@@ -6,34 +6,42 @@ import WatchlistButton from "./WatchlistButton";
 import ReviewButton from "./ReviewButton";
 import Toast from "./Toast";
 
-export default function Modal({ data, setModalContent, handleReviewModalOpen }) {
+export default function Modal({ data, setModalContent, handleReviewModalOpen, activeRoute }) {
     const [toastActive, setToastActive] = useState(false)
+   
 
     const handleModalClose = () => {
         setModalContent({})
+        
     }
-    
+
+    console.log('LOOOOOOOKKKKK', data)
     const streamSources = data.sources
     let streamSourcesList
 
     if (!streamSources || streamSources.length === 0) {
         streamSourcesList = <p className="italic">This title is not available for free or by subscription.</p>
     } else {
-        streamSourcesList = streamSources.map(s => 
-            <ul className="flex w-full justify-between items-center" key={s.id}>
-                <li className="basis-[15%] text-center"> 
-                    <img src={s.logo} alt={`${s.name || s.title} logo`} className="w-[50px] h-[50px]" />
+        streamSourcesList = 
+        <ul className="flex flex-col gap-4">
+            {streamSources.map(s => 
+           
+                <li className="flex w-full justify-between items-center" key={s.tmdbId}>
+                    <div className="basis-[15%] text-center"> 
+                        <img src={s.logo} alt={`${s.name || s.title} logo`} className="w-[50px] h-[50px]" />
+                    </div>
+                    <div className="basis-[60%] text-center">
+                        <b>{s.provider_name}</b> {`(${s.type ? 'subscription' : 'free'})`}
+                    </div>
+                    <div className="basis-[15%] text-center flex justify-end">
+                        <a href={s.trailer} target="_blank">
+                            <img src="https://img.icons8.com/color/48/next.png" alt="play button"/>
+                        </a>
+                    </div>
                 </li>
-                <li className="basis-[60%] text-center">
-                    <b>{s.provider_name}</b> {`(${s.type ? 'subscription' : 'free'})`}
-                </li>
-                <li className="basis-[15%] text-center flex justify-end">
-                    <a href={s.trailer} target="_blank">
-                        <img src="https://img.icons8.com/color/48/next.png" alt="play button"/>
-                    </a>
-                </li>
-            </ul>
-        )
+            )}
+        </ul>
+        
     }
 
     const handleAddFave = async (mediaId) => {
@@ -67,7 +75,7 @@ export default function Modal({ data, setModalContent, handleReviewModalOpen }) 
     }
 
     return (
-        <dialog id="my_modal_3" className="modal">
+        <dialog id={activeRoute} className="modal">
             <div className="modal-box lg:max-w-4xl border">
                 <form method="dialog">
                     <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={handleModalClose}>✕</button>

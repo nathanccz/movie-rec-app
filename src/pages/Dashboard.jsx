@@ -5,11 +5,13 @@ import Reviews from "../components/Reviews";
 import { getDashboardData } from "../services/api";
 import { useState, useEffect } from "react";
 import Watchlist from "../components/Watchlist";
+import ModalContextProvider from "../components/modal-context";
 
 export default function Dashboard({ route }) {
     const [userData, setUserData] = useState({})
     const [activeRoute, setActiveRoute] = useState('index')
     const [isMobile, setIsMobile] = useState(false);
+    
 
      useEffect(() => {
             if (Object.keys(userData).length > 0) {
@@ -49,12 +51,14 @@ export default function Dashboard({ route }) {
       }
     
     return (
-        <div className={"flex w-full max-w-[1700px] mx-auto all 0.3s ease" + ` ${isMobile && "flex-col"}`} id="pageWrapper">
-            <Sidebar userData={userData} activeRoute={activeRoute} isMobile={isMobile} handleLogOut={handleLogOut}/>
-            {route === 'index' && <DashboardMain userData={userData} setActiveRoute={setActiveRoute} isMobile={isMobile}/>}
-            {route === 'faves' && <Faves userData={userData} setActiveRoute={setActiveRoute}/>}
-            {route === 'reviews' && <Reviews userData={userData} setActiveRoute={setActiveRoute}/>}
-            {route === 'watchlist' && <Watchlist userData={userData} setActiveRoute={setActiveRoute}/>}
-        </div>
+        <ModalContextProvider activeRoute={activeRoute} >
+            <div className={"flex w-full max-w-[1700px] mx-auto all 0.3s ease" + ` ${isMobile && "flex-col"}`} id="pageWrapper">
+                <Sidebar userData={userData} activeRoute={activeRoute} isMobile={isMobile} handleLogOut={handleLogOut}/>
+                {route === 'index' && <DashboardMain userData={userData} setActiveRoute={setActiveRoute} isMobile={isMobile}/>}
+                {route === 'faves' && <Faves userData={userData} setActiveRoute={setActiveRoute}/>}
+                {route === 'reviews' && <Reviews userData={userData} setActiveRoute={setActiveRoute}/>}
+                {route === 'watchlist' && <Watchlist userData={userData} setActiveRoute={setActiveRoute}/>}
+            </div>
+        </ModalContextProvider>
     )
 }
