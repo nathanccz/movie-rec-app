@@ -284,3 +284,22 @@ export const getWatchlist = async () => {
         console.log('Error getting watchlist:', error)
     }
 }
+
+export const removeFromWatchlist = async (mediaId) => {
+    try {
+        const URL = `http://localhost:3000/api/movies/${mediaId}/watchlist/delete`
+        const response = await fetch(URL, {
+            method: 'DELETE',
+            credentials: 'include'
+        })
+
+        if (response.ok) {
+            return true
+        }
+
+        return null
+    } catch (error) {
+        console.log('Error deleting from watchlist:', error)
+        return null
+    }
+}
