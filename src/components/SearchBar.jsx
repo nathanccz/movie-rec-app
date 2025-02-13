@@ -1,17 +1,15 @@
 import { useState } from "react"
-import { fetchMovieAutocomplete, fetchTvAutocomplete, getFullMediaDetails } from "../services/tmdb-api";
-import Modal from "./Modal";
+import { fetchMovieAutocomplete, fetchTvAutocomplete } from "../services/tmdb-api";
 import { Icon } from "@iconify/react/dist/iconify.js"
-import ReviewModal from "./ReviewModal";
-import { addMovie, getMovie } from "../services/api";
+import { useModalContext } from "./modal-context";
+
 
 export default function SearchBar({ data, userData }) {
-    
     const [movieResults, setMovieResults] = useState([])
     const [tvResults, setTvResults] = useState([])
     const [inputText, setInputText] = useState('')
     const [wasEmpty, setWasEmpty] = useState(true)
-    const [modalContent, setModalContent] = useState({})
+    const {handleModalOpen} = useModalContext()
 
     const handleInputChange = async (e) => {
         const value = e.target.value
@@ -26,70 +24,14 @@ export default function SearchBar({ data, userData }) {
         
         if (inputText.length > 2) {
             const movieData = await fetchMovieAutocomplete(inputText)
-            console.log(movieData)
             setMovieResults(movieData)
         }
-    }
-
-    const handleModalOpen = async (tmdbId, mediaType) => { //NOTE: Add cache expiration to prevent stale data.
-        const region = userData?.country
-
-        let dataFromLS = localStorage.getItem(tmdbId),
-            dataFromDB
-        
-        if (dataFromLS !== null) {
-            setModalContent(JSON.parse(dataFromLS))
-        } else {
-            try {
-                const data = await getMovie(tmdbId)
-                console.log(data)
-                dataFromDB = data[0] || null
-                if (dataFromDB) {
-                    setModalContent(dataFromDB)
-                } else {
-                    dataFromDB = null
-                }
-            } catch (error) {
-                console.log(error)
-            }
-        } 
-        
-        if (!dataFromLS && !dataFromDB && region) {
-            
-            try {
-                const data = await getFullMediaDetails(tmdbId, mediaType, region)
-
-                setModalContent(data)
-                handleAddMovie(data)
-            } catch (error) {
-                console.log(error)
-            }
-        }
- 
-        document.getElementById('search-bar').showModal()
     }
 
     const handleClearInput = () => {
         setInputText('')
         setWasEmpty(true)
         setMovieResults([])
-    }
-
-    const handleReviewModalOpen = () => {
-        document.getElementById('my_modal_4').showModal()
-    }
-
-    const handleAddMovie = async (data) => {
-        try {
-            localStorage.setItem(data.tmdbId, JSON.stringify(data))
-            const response = await addMovie(data)
-
-            if (response.ok) {
-                console.log('movie added!')
-            }
-        } catch (error) {
-            console.log(error)
-        }
     }
 
     return (
@@ -119,7 +61,7 @@ export default function SearchBar({ data, userData }) {
                         <a role="tab" className="tab">TV Shows</a>
                     </div>
                     {movieResults.map(r => 
-                        <div className="card w-full card-side bg-base-100 shadow-xl px-4 cursor-pointer hover:bg-slate-600 ease-in-out duration-300" key={r.id} onClick={() => handleModalOpen(r.id, 'movie', 'search-bar')}>
+                        <div className="card w-full card-side bg-base-100 shadow-xl px-4 cursor-pointer hover:bg-slate-600 ease-in-out duration-300" key={r.id} onClick={() => handleModalOpen(r.id, 'movie')}>
                             <figure>
                             <img
                                 src={r.poster}
@@ -136,8 +78,7 @@ export default function SearchBar({ data, userData }) {
             </div>
             }
         </div>
-        <Modal data={modalContent} setModalContent={setModalContent} handleReviewModalOpen={handleReviewModalOpen} modalOrigin={'search-bar'}/>
-        <ReviewModal data={modalContent} setModalContent={setModalContent}/>
+       
         </>
     )
 }

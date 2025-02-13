@@ -33,6 +33,9 @@ const App = () => {
                 <Route path="/watchlist">
                     <Route index element={<Dashboard route={'watchlist'}/>} />
                 </Route>
+                <Route path="/deepsearch">
+                    <Route index element={<Dashboard route={'deepsearch'}/>} />
+                </Route>
             </Routes>
         </BrowserRouter>
     )

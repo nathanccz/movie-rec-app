@@ -7,6 +7,7 @@ export default function WatchlistButton({ data, handleAddToWatchlist, setToastAc
        
        useEffect(() => {
         if (data) {
+            console.log(data)
             setMediaId(data.tmdbId)
         }
        }, [data])

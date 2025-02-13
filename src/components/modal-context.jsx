@@ -10,43 +10,40 @@ export default function ModalContextProvider({ children, activeRoute }) {
     const [modalContent, setModalContent] = useState({})
 
      const handleModalOpen = async (tmdbId, mediaType) => { //NOTE: Add cache expiration to prevent stale data.
-            // const region = userData?.country
-            const region = 'US'
-    
-            let dataFromLS = localStorage.getItem(tmdbId),
-                dataFromDB
-            
-            if (dataFromLS !== null) {
-                setModalContent(JSON.parse(dataFromLS))
-            } else {
-                try {
-                    const data = await getMovie(tmdbId)
-                    console.log(data)
-                    dataFromDB = data[0] || null
-                    if (dataFromDB) {
-                        setModalContent(dataFromDB)
-                    } else {
-                        dataFromDB = null
-                    }
-                } catch (error) {
-                    console.log(error)
+        // const region = userData?.country
+        const region = 'US' 
+        let dataFromLS = localStorage.getItem(tmdbId),
+            dataFromDB
+        
+        if (dataFromLS !== null) {
+            setModalContent(JSON.parse(dataFromLS))
+        } else {
+            try {
+                const data = await getMovie(tmdbId)
+                console.log(data)
+                dataFromDB = data[0] || null
+                if (dataFromDB) {
+                    setModalContent(dataFromDB)
+                } else {
+                    dataFromDB = null
                 }
-            } 
-            
-            if (!dataFromLS && !dataFromDB && region) {
-                
-                try {
-                    const data = await getFullMediaDetails(tmdbId, mediaType, region)
-    
-                    setModalContent(data)
-                    handleAddMovie(data)
-                } catch (error) {
-                    console.log(error)
-                }
+            } catch (error) {
+                console.log(error)
             }
-     
-            document.getElementById(activeRoute).showModal()
+        } 
+
+        if (!dataFromLS && !dataFromDB && region) {
+            try {
+                const data = await getFullMediaDetails(tmdbId, mediaType, region)   
+                setModalContent(data)
+                handleAddMovie(data)
+            } catch (error) {
+                console.log(error)
+            }
         }
+
+        document.getElementById(activeRoute).showModal()
+    }
     
     const handleAddMovie = async (data) => {
         try {

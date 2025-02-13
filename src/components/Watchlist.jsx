@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react"
 import { getWatchlist } from "../services/api";
 import SearchBar from "./SearchBar";
+import { useModalContext } from "./modal-context";
 
 
 export default function Watchlist({ userData, setActiveRoute }) {
     const [watchlist, setWatchlist] = useState([])
     const [loading, setLoading] = useState(false)
+    const {handleModalOpen} = useModalContext()
    
     useEffect(() => {
         setActiveRoute('watchlist')
@@ -28,7 +30,7 @@ export default function Watchlist({ userData, setActiveRoute }) {
             
             <div className="w-full flex flex-wrap gap-3">
                 {watchlist.map(title =>
-                    <div key={title.tmdbId}>
+                    <div key={title.tmdbId} onClick={() => handleModalOpen(title.tmdbId, title.mediaType)} className="overflow-hidden">
                         <img src={title.poster} alt={`poster for ${title.title}`} className="lg:w-[200px] lg:h-[300px] cursor-pointer hover:scale-110 ease-in-out duration-500 w-full h-full"/>
                     </div>
                 )}

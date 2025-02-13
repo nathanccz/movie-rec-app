@@ -89,7 +89,7 @@ export default function Sidebar({ userData, activeRoute, isMobile, handleLogOut 
                     <ul className="text-lg">
                         <li><a href="/dashboard" className={activeRoute === 'index' && 'bg-gray-500'}>Watch Now</a></li>
                         <li><a>Browse</a></li>
-                        <li><a>DeepSearch</a></li>
+                        <li><a href="/deepsearch" className={activeRoute === 'deepsearch' && 'bg-gray-500'}>DeepSearch</a></li>
                         <li><a>Hidden Gems</a></li>
                     </ul>
                 </li>

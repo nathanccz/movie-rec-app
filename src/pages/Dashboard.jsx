@@ -6,6 +6,7 @@ import { getDashboardData } from "../services/api";
 import { useState, useEffect } from "react";
 import Watchlist from "../components/Watchlist";
 import ModalContextProvider from "../components/modal-context";
+import DeepSearch from "../components/DeepSearch";
 
 export default function Dashboard({ route }) {
     const [userData, setUserData] = useState({})
@@ -58,6 +59,7 @@ export default function Dashboard({ route }) {
                 {route === 'faves' && <Faves userData={userData} setActiveRoute={setActiveRoute}/>}
                 {route === 'reviews' && <Reviews userData={userData} setActiveRoute={setActiveRoute}/>}
                 {route === 'watchlist' && <Watchlist userData={userData} setActiveRoute={setActiveRoute}/>}
+                {route === 'deepsearch' && <DeepSearch userData={userData} setActiveRoute={setActiveRoute}/>}
             </div>
         </ModalContextProvider>
     )

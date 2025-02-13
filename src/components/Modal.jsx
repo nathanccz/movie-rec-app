@@ -8,14 +8,12 @@ import Toast from "./Toast";
 
 export default function Modal({ data, setModalContent, handleReviewModalOpen, activeRoute }) {
     const [toastActive, setToastActive] = useState(false)
-   
 
     const handleModalClose = () => {
         setModalContent({})
         
     }
 
-    console.log('LOOOOOOOKKKKK', data)
     const streamSources = data.sources
     let streamSourcesList
 
@@ -63,6 +61,7 @@ export default function Modal({ data, setModalContent, handleReviewModalOpen, ac
     const handleAddToWatchlist = async (mediaId) => {
         if (mediaId) {
             try {
+                console.log(mediaId)
                 const response = await addToWatchlist(mediaId) 
 
                 if (response.ok) {
