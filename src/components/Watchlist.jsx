@@ -9,7 +9,7 @@ import { removeFromWatchlist } from "../services/api";
 export default function Watchlist({ userData, setActiveRoute }) {
     const [watchlist, setWatchlist] = useState([])
     const [loading, setLoading] = useState(false)
-    const [isHovered, setIsHovered] = useState(false)
+    const [isHovered, setIsHovered] = useState(null)
     const {handleModalOpen} = useModalContext()
    
     useEffect(() => {
@@ -23,14 +23,6 @@ export default function Watchlist({ userData, setActiveRoute }) {
         }
         fetchWatchlist()
     }, [])
-
-    const setOpacityClass = () => {
-        let baseClass = "lg:w-[200px] lg:h-[300px] cursor-pointer hover:scale-110 ease-in-out duration-500 w-full h-full"
-        if (isHovered) {
-            baseClass += ' opacity-50'
-        }
-        return baseClass
-    }
 
      const handleRemoveFromWatchlist = async (mediaId) => {
             try {
@@ -53,9 +45,17 @@ export default function Watchlist({ userData, setActiveRoute }) {
             
             <div className="w-full flex flex-wrap gap-3">
                 {watchlist.map(title =>
-                    <div key={title.tmdbId} className="overflow-hidden relative">
-                        <img src={title.poster} alt={`poster for ${title.title}`} onClick={() => handleModalOpen(title.tmdbId, title.mediaType)} className={setOpacityClass()} id={title.tmdbId}/>
-                        <Icon icon="mdi:eye" className='text-3xl cursor-pointer absolute right-0 bottom-0' onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} onClick={() => handleRemoveFromWatchlist(title.tmdbId)}/>
+                    <div key={title.tmdbId} className="overflow-hidden" onMouseEnter={() => setIsHovered(title.tmdbId)} onMouseLeave={() => setIsHovered(null)} id={title.tmdbId}>
+                        <img src={title.poster} 
+                             alt={`poster for ${title.title}`} 
+                             onClick={() => handleModalOpen(title.tmdbId, title.mediaType)} 
+                             className={"lg:w-[200px] lg:h-[300px] cursor-pointer hover:scale-110 ease-in-out duration-500 w-full h-full" + `${title.tmdbId === isHovered ? ' opacity-50' : ''}`} 
+                             id={title.tmdbId}
+                        />
+                        {isHovered && title.tmdbId === isHovered &&
+                        <div className="relative">
+                            <Icon icon="mdi:eye" className='text-3xl cursor-pointer absolute right-0 bottom-0' onClick={() => handleRemoveFromWatchlist(title.tmdbId)}/>
+                        </div>}
                     </div>
                 )}
             </div>

@@ -17,18 +17,20 @@ export default function DeepSearch({ userData, setActiveRoute, activeRoute }) {
     return (
         <main class="p-10 bg-black w-full h-screen bg-main-background bg-cover rounded-tl-lg border-r-[1px] border-gray-400 overflow-y-scroll relative">
             <SearchBar userData={userData} />
-            <h1 className="text-3xl font-bold mb-5 text-white"> <i class="fa-regular fa-star"></i> DeepSearch </h1>
-            <span className="text-white">Find movies and TV shows based on your taste — or discover something new.</span> 
-
-            <div className="divider divider-neutral"></div>
+           
             <div className="flex items-center justify-center h-full flex-col gap-5">
-                <h2 className="font-bold text-2xl">Welcome to DeepSearch.</h2>
+                <h2 className="font-bold text-xl">Welcome to Deep Search, powered by DeepSeek AI.</h2>
                 <p className="text-sm">What kind of movie or TV show are you looking for?</p>
-                <div className="w-3/5">
-                    <div>
-                        <textarea className="textarea textarea-secondary w-full resize-none" placeholder="Ask me anything..."></textarea>
+                <div className="w-3/5 p-2 border rounded bg-gray-800">
+                    <div className="mb-1">
+                        <textarea className="textarea textarea-secondary w-full resize-none border-none focus:outline-none overflow-visible bg-transparent" placeholder="Ask me anything..."></textarea>
                     </div>
-                    <div className="flex justify-end">
+                    <div className="flex justify-between">
+                        <div className="h-[2rem] over">
+                            <button className="btn btn-outline text-xs mr-3 px-3 h-[2.1rem] rounded">Any</button>
+                            <button className="btn btn-outline text-xs mr-3 px-3 h-[2.1rem] rounded">Film</button>
+                            <button className="btn btn-outline text-xs px-3 h-[2.1rem] rounded">TV</button>
+                        </div>
                         <Icon icon="mdi:send-circle" className='text-3xl cursor-pointer'/>
                     </div>
                 </div>

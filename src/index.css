@@ -5,7 +5,9 @@
 #pageWrapper.blurred {
     filter: blur(5px); /* Adjust the blur strength */
 }
-
+.btn {
+  min-height: auto !important;
+}
 /* 
   Prevent modal backdrop from shifting left on Windows due to scrollbar accommodation.
   This issue occurs because Windows reserves space for the scrollbar, causing the viewport to shift.
