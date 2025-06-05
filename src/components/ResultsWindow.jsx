@@ -38,7 +38,7 @@ export default function ResultsWindow({ results }) {
             <h3 className="mb-3 font-bold">Plot Overview:</h3>
             <p>{r.overview}</p>
             <h3 className="mt-5 mb-3 font-bold">Why You Might Like It:</h3>
-            <p>{r.overview}</p>
+            <p>{r.description}</p>
             <h3 className="mt-5 mb-3 font-bold">Where to Stream It:</h3>
             <p>Title unavailable</p>
           </div>

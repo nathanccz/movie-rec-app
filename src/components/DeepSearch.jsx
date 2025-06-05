@@ -42,7 +42,7 @@ export default function DeepSearch({ userData, setActiveRoute, activeRoute }) {
       console.log(results)
       setIntroMessage(data[0])
       setEndMessage(data[2])
-      setResults(results)
+      setResults(results.filter((el) => el))
       setUserMessages([...userMessages, message])
       setMessage('')
     } catch (error) {

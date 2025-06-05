@@ -198,6 +198,7 @@ export const generateDataFromMessage = async (obj) => {
   const data = []
 
   for (const key in obj) {
+    const description = obj[key]
     const title = key
       .split(' ')
       .filter((el) => !el.includes('('))
@@ -205,8 +206,11 @@ export const generateDataFromMessage = async (obj) => {
     const response = await fetchMovieAutocomplete(title)
     console.log(response)
     const filtered = response.filter((el) => el.title === title)[0]
-    console.log(filtered)
-    data.push(filtered)
+    const titleWithDecription = {
+      ...filtered,
+      description: description,
+    }
+    data.push(titleWithDecription)
   }
   console.log(data)
   return data
