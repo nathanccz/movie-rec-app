@@ -107,7 +107,7 @@ export default function Sidebar({
             />
             <div class="mt-2 ml-3">
               <h3 class="font-bold">{userData.displayName}</h3>
-              <span>email@email.com</span>
+              <span>n.casarez@icloud.com</span>
             </div>
           </div>
           <ul className="menu bg-black rounded-box w-full font-bold">
@@ -174,7 +174,7 @@ export default function Sidebar({
               </ul>
             </li>
             <li>
-              <h2 className="menu-title text-xl text-gray-500">Playlists</h2>
+              <h2 className="menu-title text-xl text-gray-500">Chat History</h2>
               <ul className="text-lg">
                 <li>
                   <a>Recently Added</a>

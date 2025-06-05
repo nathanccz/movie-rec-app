@@ -324,7 +324,8 @@ export const getOpenAIRecommendations = async (mediaType, title) => {
       }),
       credentials: 'include',
     })
-    console.log(response)
+    const data = await response.json()
+    return data
   } catch (error) {
     console.log(error)
   }

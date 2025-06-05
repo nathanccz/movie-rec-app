@@ -193,3 +193,21 @@ export const getTrendingNow = async (provider, mediaType, userRegion) => {
     console.log('Error fetching trending titles:', error)
   }
 }
+
+export const generateDataFromMessage = async (obj) => {
+  const data = []
+
+  for (const key in obj) {
+    const title = key
+      .split(' ')
+      .filter((el) => !el.includes('('))
+      .join(' ')
+    const response = await fetchMovieAutocomplete(title)
+    console.log(response)
+    const filtered = response.filter((el) => el.title === title)[0]
+    console.log(filtered)
+    data.push(filtered)
+  }
+  console.log(data)
+  return data
+}

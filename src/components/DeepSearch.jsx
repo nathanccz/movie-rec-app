@@ -3,12 +3,19 @@ import SearchBar from './SearchBar'
 import { useModalContext } from './modal-context'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { getOpenAIRecommendations } from '../services/api'
+import ChatMain from './ChatMain'
+import { buildResultsMessage, isLikelyMediaRelated } from '../../utils/helpers'
+import { generateDataFromMessage } from '../services/tmdb-api'
 
 export default function DeepSearch({ userData, setActiveRoute, activeRoute }) {
   const [results, setResults] = useState([])
   const [loading, setLoading] = useState(false)
   const [mediaType, setMediaType] = useState('any')
   const [message, setMessage] = useState('')
+  const [userMessages, setUserMessages] = useState([])
+  const [isChatting, setIsChatting] = useState(false)
+  const [introMessage, setIntroMessage] = useState('')
+  const [endMessage, setEndMessage] = useState('')
   const { handleModalOpen } = useModalContext()
   const [query, setQuery] = useState('')
 
@@ -21,10 +28,23 @@ export default function DeepSearch({ userData, setActiveRoute, activeRoute }) {
       alert('Please enter a message.')
       return
     }
+    if (!isLikelyMediaRelated(message)) {
+      alert("Couldn't generate recommendations. Please try again.")
+      return
+    }
     try {
       console.log(message, mediaType)
       const response = await getOpenAIRecommendations(mediaType, message)
       console.log(response)
+      setIsChatting(true)
+      const data = buildResultsMessage(response.reply)
+      const results = await generateDataFromMessage(data[1])
+      console.log(results)
+      setIntroMessage(data[0])
+      setEndMessage(data[2])
+      setResults(results)
+      setUserMessages([...userMessages, message])
+      setMessage('')
     } catch (error) {
       console.log(error)
     }
@@ -42,16 +62,19 @@ export default function DeepSearch({ userData, setActiveRoute, activeRoute }) {
     }
   }
 
-  return (
-    <main class="p-10 bg-black w-full h-screen bg-main-background bg-cover rounded-tl-lg border-r-[1px] border-gray-400 overflow-y-scroll relative">
+  return !isChatting ? (
+    <main className="p-10 bg-black w-full h-screen bg-main-background bg-cover rounded-tl-lg border-r-[1px] border-gray-400 overflow-y-scroll relative">
       <SearchBar userData={userData} />
 
       <div className="flex items-center justify-center h-full flex-col gap-5">
         <h2 className="font-bold text-xl">
           Welcome to Deep Search, powered by DeepSeek AI.
         </h2>
-        <p className="text-sm">
+        <p className="text-md">
           What kind of movie or TV show are you looking for?
+        </p>
+        <p className="text-sm italic">
+          Example: "What are some good movies for date night?"
         </p>
         <div className="w-3/5 p-2 border rounded bg-gray-800">
           <div className="mb-1">
@@ -59,6 +82,7 @@ export default function DeepSearch({ userData, setActiveRoute, activeRoute }) {
               className="textarea textarea-secondary w-full resize-none border-none focus:outline-none overflow-visible bg-transparent"
               placeholder="Ask me anything..."
               onChange={handleInputChange}
+              value={message}
             ></textarea>
           </div>
           <div className="flex justify-between">
@@ -82,5 +106,16 @@ export default function DeepSearch({ userData, setActiveRoute, activeRoute }) {
         </div>
       </div>
     </main>
+  ) : (
+    <ChatMain
+      userData={userData}
+      results={results}
+      handleInputChange={handleInputChange}
+      userMessages={userMessages}
+      handleGetRecommendations={handleGetRecommendations}
+      message={message}
+      introMessage={introMessage}
+      endMessage={endMessage}
+    />
   )
 }
