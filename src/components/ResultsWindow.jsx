@@ -1,9 +1,11 @@
 import { useRef } from 'react'
 import { gsap } from 'gsap'
 import { useGSAP } from '@gsap/react'
+import { useModalContext } from './modal-context'
 
 export default function ResultsWindow({ results }) {
   const container = useRef()
+  const { handleModalOpen } = useModalContext()
 
   useGSAP(
     () => {
@@ -28,11 +30,14 @@ export default function ResultsWindow({ results }) {
                 r.release_date?.split('-')[0] || 'N/A'
               })`}
             </h2>
-            <img
-              src={r.poster}
-              alt={`poster for ${r.original_title}`}
-              className="h-[300px] w-[200px] mx-auto"
-            />
+            <div className="overflow-hidden">
+              <img
+                src={r.poster}
+                alt={`poster for ${r.original_title}`}
+                className="cursor-pointer hover:scale-110 ease-in-out duration-500 h-[300px] w-[200px] mx-auto"
+                onClick={() => handleModalOpen(r.id, 'movie')}
+              />
+            </div>
           </div>
           <div className="basis-3/4 border p-3 rounded-lg bg-slate-700">
             <h3 className="mb-3 font-bold">Plot Overview:</h3>

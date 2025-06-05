@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import SearchBar from './SearchBar'
-import { useModalContext } from './modal-context'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { getOpenAIRecommendations } from '../services/api'
 import ChatMain from './ChatMain'
@@ -16,7 +15,6 @@ export default function DeepSearch({ userData, setActiveRoute, activeRoute }) {
   const [isChatting, setIsChatting] = useState(false)
   const [introMessage, setIntroMessage] = useState('')
   const [endMessage, setEndMessage] = useState('')
-  const { handleModalOpen } = useModalContext()
   const [query, setQuery] = useState('')
 
   useEffect(() => {
@@ -64,8 +62,6 @@ export default function DeepSearch({ userData, setActiveRoute, activeRoute }) {
 
   return !isChatting ? (
     <main className="p-10 bg-black w-full h-screen bg-main-background bg-cover rounded-tl-lg border-r-[1px] border-gray-400 overflow-y-scroll relative">
-      <SearchBar userData={userData} />
-
       <div className="flex items-center justify-center h-full flex-col gap-5">
         <h2 className="font-bold text-xl">
           Welcome to Deep Search, powered by DeepSeek AI.
