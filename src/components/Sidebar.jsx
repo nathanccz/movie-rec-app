@@ -7,6 +7,8 @@ export default function Sidebar({
   isMobile,
   handleLogOut,
 }) {
+  const getNavLinkClass = ({ isActive }) =>
+    isActive ? 'bg-gray-500 block' : 'block'
   return (
     <>
       {isMobile ? (
@@ -115,10 +117,7 @@ export default function Sidebar({
               <h2 className="menu-title text-xl text-gray-500">Discover</h2>
               <ul className="text-lg">
                 <li>
-                  <Link
-                    to={'/dashboard'}
-                    className={activeRoute === 'index' && 'bg-gray-500'}
-                  >
+                  <Link to={'/dashboard'} className={getNavLinkClass}>
                     Watch Now
                   </Link>
                 </li>
@@ -127,8 +126,8 @@ export default function Sidebar({
                 </li>
                 <li>
                   <Link
-                    to={'/deepsearch'}
-                    className={activeRoute === 'deepsearch' && 'bg-gray-500'}
+                    to={'/dashboard/deepsearch'}
+                    className={getNavLinkClass}
                   >
                     DeepSearch
                   </Link>
@@ -142,26 +141,17 @@ export default function Sidebar({
               <h2 className="menu-title text-xl text-gray-500">Collection</h2>
               <ul className="text-lg">
                 <li>
-                  <Link
-                    to={'/watchlist'}
-                    className={activeRoute === 'watchlist' && 'bg-gray-500'}
-                  >
+                  <Link to={'/dashboard/watchlist'} className={getNavLinkClass}>
                     Watchlist
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to={'/faves'}
-                    className={activeRoute === 'faves' && 'bg-gray-500'}
-                  >
+                  <Link to={'/dashboard/faves'} className={getNavLinkClass}>
                     My Faves
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to={'/reviews'}
-                    className={activeRoute === 'reviews' && 'bg-gray-500'}
-                  >
+                  <Link to={'/dashboard/reviews'} className={getNavLinkClass}>
                     My Reviews
                   </Link>
                 </li>

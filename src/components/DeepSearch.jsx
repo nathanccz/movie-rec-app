@@ -17,10 +17,6 @@ export default function DeepSearch({ userData, setActiveRoute, activeRoute }) {
   const [endMessage, setEndMessage] = useState('')
   const [query, setQuery] = useState('')
 
-  useEffect(() => {
-    setActiveRoute('deepsearch')
-  }, [])
-
   const handleGetRecommendations = async () => {
     if (!message) {
       alert('Please enter a message.')
