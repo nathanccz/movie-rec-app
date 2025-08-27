@@ -1,14 +1,8 @@
-import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
-export default function Sidebar({
-  userData,
-  activeRoute,
-  isMobile,
-  handleLogOut,
-}) {
+export default function Sidebar({ userData, isMobile, handleLogOut }) {
   const getNavLinkClass = ({ isActive }) =>
-    isActive ? 'bg-gray-500 block' : 'block'
+    isActive ? 'bg-gray-700 block' : 'block'
   return (
     <>
       {isMobile ? (
@@ -117,20 +111,20 @@ export default function Sidebar({
               <h2 className="menu-title text-xl text-gray-500">Discover</h2>
               <ul className="text-lg">
                 <li>
-                  <Link to={'/dashboard'} className={getNavLinkClass}>
-                    Watch Now
-                  </Link>
+                  <NavLink to={'/dashboard'} className={getNavLinkClass} end>
+                    Trending
+                  </NavLink>
                 </li>
-                <li>
+                {/* <li>
                   <a>Browse</a>
-                </li>
+                </li> */}
                 <li>
-                  <Link
+                  <NavLink
                     to={'/dashboard/deepsearch'}
                     className={getNavLinkClass}
                   >
                     DeepSearch
-                  </Link>
+                  </NavLink>
                 </li>
                 <li>
                   <a>Hidden Gems</a>
@@ -141,19 +135,25 @@ export default function Sidebar({
               <h2 className="menu-title text-xl text-gray-500">Collection</h2>
               <ul className="text-lg">
                 <li>
-                  <Link to={'/dashboard/watchlist'} className={getNavLinkClass}>
+                  <NavLink
+                    to={'/dashboard/watchlist'}
+                    className={getNavLinkClass}
+                  >
                     Watchlist
-                  </Link>
+                  </NavLink>
                 </li>
                 <li>
-                  <Link to={'/dashboard/faves'} className={getNavLinkClass}>
+                  <NavLink to={'/dashboard/faves'} className={getNavLinkClass}>
                     My Faves
-                  </Link>
+                  </NavLink>
                 </li>
                 <li>
-                  <Link to={'/dashboard/reviews'} className={getNavLinkClass}>
+                  <NavLink
+                    to={'/dashboard/reviews'}
+                    className={getNavLinkClass}
+                  >
                     My Reviews
-                  </Link>
+                  </NavLink>
                 </li>
                 <li>
                   <a>Directors</a>

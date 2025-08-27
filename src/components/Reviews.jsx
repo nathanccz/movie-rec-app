@@ -6,7 +6,7 @@ import DeleteModal from './DeleteModal'
 import Toast from './Toast'
 import EditReviewModal from './EditReviewModal'
 
-export default function Reviews({ userData, setActiveRoute }) {
+export default function Reviews({ userData }) {
   const [reviews, setReviews] = useState([])
   const [activeReview, setActiveReview] = useState('')
   const [toastActive, setToastActive] = useState(false)
@@ -81,7 +81,7 @@ export default function Reviews({ userData, setActiveRoute }) {
       <SearchBar userData={userData} />
       <h1 className="text-3xl font-bold mb-2 text-white">
         {' '}
-        <i class="fa-regular fa-star"></i> Your Reviews{' '}
+        <i class="fa-regular fa-star"></i> My Reviews{' '}
       </h1>
 
       <div className="divider divider-neutral"></div>

@@ -39,8 +39,9 @@ export default function ChatMain({
               </div>
             </div>
           ) : (
-            <div className="border rounded-md p-3 bg-slate-600 mb-3 max-w-[30rem] ml-96">
-              Searching...
+            <div className="flex gap-1 relative">
+              <span className="block font-bold">Searching</span>
+              <span className="block loading loading-dots loading-sm absolute top-3 left-20"></span>
             </div>
           )}
         </div>

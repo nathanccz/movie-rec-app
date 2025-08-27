@@ -39,7 +39,7 @@ export default function Faves({ userData, setActiveRoute, activeRoute }) {
       <SearchBar userData={userData} />
       <h1 className="text-3xl font-bold mb-2 text-white">
         {' '}
-        <i class="fa-regular fa-star"></i> Your Faves{' '}
+        <i class="fa-regular fa-star"></i> My Faves{' '}
       </h1>
 
       <div className="divider divider-neutral"></div>

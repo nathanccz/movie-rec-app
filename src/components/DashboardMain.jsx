@@ -38,7 +38,7 @@ export default function DashboardMain({ userData, isMobile }) {
       {!isMobile && <SearchBar userData={userData} />}
       <h1 className="text-3xl font-bold mb-5 text-white">
         {' '}
-        <i class="fa-regular fa-star"></i> Watch Now{' '}
+        <i class="fa-regular fa-star"></i>Trending{' '}
       </h1>
       <span className="text-white">Top movies for you. Updated daily.</span>
 
