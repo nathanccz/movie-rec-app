@@ -27,10 +27,11 @@ export default function DeepSearch({ userData, setActiveRoute, activeRoute }) {
       return
     }
     try {
+      setLoading(true)
+      setIsChatting(true)
       console.log(message, mediaType)
       const response = await getOpenAIRecommendations(mediaType, message)
       console.log(response)
-      setIsChatting(true)
       const data = buildResultsMessage(response.reply)
       const results = await generateDataFromMessage(data[1])
       console.log(results)
@@ -39,6 +40,7 @@ export default function DeepSearch({ userData, setActiveRoute, activeRoute }) {
       setResults(results.filter((el) => el))
       setUserMessages([...userMessages, message])
       setMessage('')
+      setLoading(false)
     } catch (error) {
       console.log(error)
     }
@@ -108,6 +110,7 @@ export default function DeepSearch({ userData, setActiveRoute, activeRoute }) {
       message={message}
       introMessage={introMessage}
       endMessage={endMessage}
+      loading={loading}
     />
   )
 }
