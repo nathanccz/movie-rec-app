@@ -44,8 +44,8 @@ export default function ResultsWindow({ results }) {
             <p>{r.overview}</p>
             <h3 className="mt-5 mb-3 font-bold">Why You Might Like It:</h3>
             <p>{r.description}</p>
-            <h3 className="mt-5 mb-3 font-bold">Where to Stream It:</h3>
-            <p>Title unavailable</p>
+            {/* <h3 className="mt-5 mb-3 font-bold">Where to Stream It:</h3>
+            <p>Title unavailable</p> */}
           </div>
         </div>
       ))}

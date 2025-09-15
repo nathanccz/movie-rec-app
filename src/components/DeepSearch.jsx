@@ -62,7 +62,7 @@ export default function DeepSearch({ userData, setActiveRoute, activeRoute }) {
     <main className="p-10 bg-black w-full h-screen bg-main-background bg-cover rounded-tl-lg border-r-[1px] border-gray-400 overflow-y-scroll relative">
       <div className="flex items-center justify-center h-full flex-col gap-5">
         <h2 className="font-bold text-xl">
-          Welcome to Deep Search, powered by DeepSeek AI.
+          Welcome to SmartSearch, powered by Groq AI.
         </h2>
         <p className="text-md">
           What kind of movie or TV show are you looking for?

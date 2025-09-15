@@ -5,7 +5,7 @@ import { useModalContext } from './modal-context'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { removeFromWatchlist } from '../services/api'
 
-export default function Watchlist({ userData, setActiveRoute }) {
+export default function Watchlist({ userData }) {
   const [watchlist, setWatchlist] = useState([])
   const [loading, setLoading] = useState(false)
   const [isHovered, setIsHovered] = useState(null)

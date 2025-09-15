@@ -390,3 +390,12 @@ export const buildResultsMessage = (text) => {
     console.warn('No code block found')
   }
 }
+
+export function isEmpty(obj) {
+  for (let field in obj) {
+    if (obj[field].length > 0) {
+      return false
+    }
+  }
+  return true
+}

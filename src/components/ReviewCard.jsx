@@ -9,11 +9,11 @@ export default function MediaCard({
   handleOpenEditModal,
 }) {
   return (
-    <div className="card bg-base-100 w-96 shadow-xl">
-      <figure>
+    <div className="card bg-base-100 shadow-xl flex flex-row">
+      <figure className="w-[20%]">
         <img src={poster} alt={`poster for ${title}`} />
       </figure>
-      <div className="card-body">
+      <div className="card-body w-[80%]">
         <h2 className="card-title">{title}</h2>
         <div className="max-h-[200px] overflow-hidden">
           <p>{text}</p>

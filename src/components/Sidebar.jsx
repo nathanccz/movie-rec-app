@@ -97,7 +97,7 @@ export default function Sidebar({ userData, isMobile, handleLogOut }) {
                     </div>
                 </div> */}
             <img
-              src={userData.image}
+              src="https://lh3.googleusercontent.com/a/ACg8ocIN_uR-GpkIp3aQ_50-V1M6V2hfmKJ94qivbRuRgWuCJvd-Qg=s96-c"
               alt="google avatar"
               className="w-[50px] h-[50px]"
             />
@@ -123,7 +123,7 @@ export default function Sidebar({ userData, isMobile, handleLogOut }) {
                     to={'/dashboard/deepsearch'}
                     className={getNavLinkClass}
                   >
-                    DeepSearch
+                    SmartSearch
                   </NavLink>
                 </li>
                 <li>
