@@ -2,10 +2,6 @@
 
 Welcome to my **Movierec.ai** repository!
 
----
-
-## 📜 About My Project
-
 This is a movie discovery app that leverages Groq AI API to generate recommendations via chat - just ask it any film-related question you like! You can also fave, review or add titles to your watchlist.
 
 ![movierec-screen-recording-090225](https://github.com/user-attachments/assets/d4d26dab-47ac-4703-82d2-371b17d1a53d)
